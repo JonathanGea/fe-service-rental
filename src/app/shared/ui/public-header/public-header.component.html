@@ -1,0 +1,107 @@
+<header class="sticky top-0 z-50 border-b border-public bg-public-surface shadow-sm">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 text-xs text-public-strong/60">
+    <div class="flex items-center gap-4">
+      <span>Open daily 08.00 - 21.00</span>
+      <span class="hidden md:inline">Jl. Melati No. 18, Bandung</span>
+    </div>
+    <a class="text-public-primary hover:text-public-primary/80" href="tel:+628123456789">
+      +62 812 3456 789
+    </a>
+  </div>
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <a routerLink="/" class="flex items-center gap-2 text-lg font-semibold tracking-wide">
+      <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-public-primary text-white">FR</span>
+      Fe-Service Rental
+    </a>
+    <nav class="hidden items-center gap-6 text-sm text-public-strong/70 md:flex">
+      <a
+        routerLink="/"
+        routerLinkActive="text-public-primary"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="transition hover:text-public-primary"
+      >
+        Home
+      </a>
+      <a class="transition hover:text-public-primary" href="#fleet">Kendaraan</a>
+      <a class="transition hover:text-public-primary" href="#how-it-works">Cara Sewa</a>
+      <a class="transition hover:text-public-primary" href="#faq">FAQ</a>
+    </nav>
+    <div class="hidden items-center gap-3 md:flex">
+      <a
+        routerLink="/admin"
+        routerLinkActive="text-public-primary"
+        class="rounded-full border border-public bg-public-surface px-4 py-2 text-xs font-semibold text-public-strong/70 transition hover:text-public-primary"
+      >
+        Admin
+      </a>
+      <a
+        class="rounded-full bg-public-primary px-4 py-2 text-xs font-semibold text-white transition hover:bg-public-primary/90"
+        href="https://wa.me/628123456789?text=Halo%20saya%20ingin%20sewa%20kendaraan"
+      >
+        Pesan via WhatsApp
+      </a>
+    </div>
+    <button
+      type="button"
+      class="flex items-center gap-2 rounded-full border border-public bg-public-surface px-4 py-2 text-xs font-semibold text-public-strong/70 transition hover:text-public-primary md:hidden"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="isMenuOpen"
+      aria-controls="public-mobile-menu"
+      aria-label="Toggle menu"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="h-4 w-4"
+        aria-hidden="true"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75Zm0 5.25A.75.75 0 0 1 3.75 11.25h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </button>
+  </div>
+  <div
+    id="public-mobile-menu"
+    class="border-t border-public bg-public-surface transition-all duration-300 md:hidden overflow-hidden"
+    [class.max-h-0]="!isMenuOpen"
+    [class.max-h-96]="isMenuOpen"
+    [class.opacity-0]="!isMenuOpen"
+    [class.opacity-100]="isMenuOpen"
+    [class.pointer-events-none]="!isMenuOpen"
+    [attr.aria-hidden]="!isMenuOpen"
+  >
+    <div class="mx-auto grid max-w-6xl gap-4 px-6 py-5 text-sm text-public-strong/70">
+      <a
+        routerLink="/"
+        routerLinkActive="text-public-primary"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="transition hover:text-public-primary"
+        (click)="closeMenu()"
+      >
+        Home
+      </a>
+      <a class="transition hover:text-public-primary" href="#fleet" (click)="closeMenu()">Kendaraan</a>
+      <a class="transition hover:text-public-primary" href="#how-it-works" (click)="closeMenu()">Cara Sewa</a>
+      <a class="transition hover:text-public-primary" href="#faq" (click)="closeMenu()">FAQ</a>
+      <a
+        routerLink="/admin"
+        routerLinkActive="text-public-primary"
+        class="rounded-full border border-public bg-public-surface px-4 py-2 text-center text-xs font-semibold text-public-strong/70 transition hover:text-public-primary"
+        (click)="closeMenu()"
+      >
+        Admin
+      </a>
+      <a
+        class="rounded-full bg-public-primary px-4 py-2 text-center text-xs font-semibold text-white transition hover:bg-public-primary/90"
+        href="https://wa.me/628123456789?text=Halo%20saya%20ingin%20sewa%20kendaraan"
+        (click)="closeMenu()"
+      >
+        Pesan via WhatsApp
+      </a>
+    </div>
+  </div>
+</header>

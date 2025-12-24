@@ -1,21 +1,9 @@
-<div class="min-h-screen bg-slate-950 text-white">
-  <header class="border-b border-white/10">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      <a routerLink="/" class="text-lg font-semibold tracking-wide">Fe-Service</a>
-      <nav class="flex items-center gap-4 text-sm text-white/70">
-        <a routerLink="/" routerLinkActive="text-white" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-        <a routerLink="/admin" routerLinkActive="text-white">Admin</a>
-      </nav>
-    </div>
-  </header>
+<div class="min-h-screen bg-public-app text-public-strong flex flex-col">
+  <app-public-header />
 
-  <main class="mx-auto max-w-6xl px-6 py-10">
+  <main class="mx-auto max-w-6xl px-6 py-10 flex-1">
     <router-outlet />
   </main>
 
-  <footer class="border-t border-white/10">
-    <div class="mx-auto max-w-6xl px-6 py-6 text-xs text-white/50">
-      Public landing site layout
-    </div>
-  </footer>
+  <app-public-footer />
 </div>

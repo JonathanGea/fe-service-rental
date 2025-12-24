@@ -6,4 +6,9 @@
   --color-primary: #4CAF50;
   --color-strong: #344767;
   --color-default: #FFFFFF;
+  --color-public-app: #FFF8F1;
+  --color-public-surface: #FFFFFF;
+  --color-public-primary: #FF7A00;
+  --color-public-strong: #2E2A26;
+  --color-public: #FFFFFF;
 }

@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+details .accordion-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 300ms ease, opacity 300ms ease;
+}
+
+details[open] .accordion-content {
+  max-height: 240px;
+  opacity: 1;
+}
+
+details .accordion-chevron {
+  transition: transform 300ms ease;
+}
+
+details[open] .accordion-chevron {
+  transform: rotate(180deg);
+}

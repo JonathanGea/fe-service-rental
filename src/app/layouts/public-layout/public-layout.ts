@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
+import { PublicFooterComponent } from '../../shared/ui/public-footer/public-footer.component';
+import { PublicHeaderComponent } from '../../shared/ui/public-header/public-header.component';
 
 @Component({
   selector: 'app-public-layout',
-  imports: [RouterLink, RouterLinkActive, RouterOutlet],
+  imports: [PublicFooterComponent, PublicHeaderComponent, RouterOutlet],
   templateUrl: './public-layout.html',
   styleUrl: './public-layout.css'
 })
