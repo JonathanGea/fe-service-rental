@@ -1,50 +1,138 @@
-<section>
-  <div class="flex flex-wrap items-center justify-between gap-4">
-    <div>
-      <p class="text-xs uppercase tracking-[0.3em] text-strong/60">Overview</p>
-      <h1 class="mt-2 text-3xl font-semibold">Dashboard</h1>
-      <p class="mt-2 text-sm text-strong/70">Quick snapshot of system activity.</p>
+<section class="space-y-8">
+  <header class="space-y-2">
+    <h2 class="text-2xl font-semibold text-strong">Dashboard</h2>
+    <p class="text-sm text-strong/70">Ringkasan status kendaraan dan akses cepat ke modul admin.</p>
+  </header>
+
+  <div class="rounded-2xl border border-default bg-surface p-6 shadow-sm">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h3 class="text-lg font-semibold text-strong">Status Armada</h3>
+        <p class="text-xs text-strong/60">Data diambil dari endpoint kendaraan terbaru.</p>
+      </div>
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-xl border border-default px-4 py-2 text-xs font-semibold text-strong transition hover:text-primary"
+        (click)="loadSummary()"
+        [disabled]="isLoading"
+      >
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12a9 9 0 11-2.64-6.36" />
+          <path d="M21 3v6h-6" />
+        </svg>
+        <span>Refresh</span>
+      </button>
     </div>
-    <button
-      class="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4" *ngIf="!isLoading">
+      <div class="rounded-2xl border border-default bg-app p-4">
+        <p class="text-xs uppercase text-strong/50">Total Kendaraan</p>
+        <p class="mt-2 text-2xl font-semibold text-strong">{{ summary.total }}</p>
+      </div>
+      <div class="rounded-2xl border border-default bg-app p-4">
+        <p class="text-xs uppercase text-strong/50">Available</p>
+        <p class="mt-2 text-2xl font-semibold text-strong">{{ summary.available }}</p>
+      </div>
+      <div class="rounded-2xl border border-default bg-app p-4">
+        <p class="text-xs uppercase text-strong/50">Rented</p>
+        <p class="mt-2 text-2xl font-semibold text-strong">{{ summary.rented }}</p>
+      </div>
+      <div class="rounded-2xl border border-default bg-app p-4">
+        <p class="text-xs uppercase text-strong/50">Maintenance</p>
+        <p class="mt-2 text-2xl font-semibold text-strong">{{ summary.maintenance }}</p>
+      </div>
+    </div>
+
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4" *ngIf="isLoading">
+      <div class="h-24 animate-pulse rounded-2xl border border-default bg-app"></div>
+      <div class="h-24 animate-pulse rounded-2xl border border-default bg-app"></div>
+      <div class="h-24 animate-pulse rounded-2xl border border-default bg-app"></div>
+      <div class="h-24 animate-pulse rounded-2xl border border-default bg-app"></div>
+    </div>
+
+    <div
+      class="mt-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600"
+      *ngIf="!isLoading && errorMessage"
     >
-      Create report
-    </button>
-  </div>
+      {{ errorMessage }}
+    </div>
 
-  <div class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-    <div class="rounded-2xl border border-default bg-surface p-4">
-      <div class="text-xs text-strong/60">Active users</div>
-      <div class="mt-3 text-2xl font-semibold">1,284</div>
-    </div>
-    <div class="rounded-2xl border border-default bg-surface p-4">
-      <div class="text-xs text-strong/60">Errors</div>
-      <div class="mt-3 text-2xl font-semibold">3</div>
-    </div>
-    <div class="rounded-2xl border border-default bg-surface p-4">
-      <div class="text-xs text-strong/60">Latency</div>
-      <div class="mt-3 text-2xl font-semibold">120ms</div>
-    </div>
-    <div class="rounded-2xl border border-default bg-surface p-4">
-      <div class="text-xs text-strong/60">Queues</div>
-      <div class="mt-3 text-2xl font-semibold">8</div>
+    <div
+      class="mt-6 rounded-2xl border border-default bg-app px-4 py-6 text-center text-sm text-strong/70"
+      *ngIf="!isLoading && !errorMessage && summary.total === 0"
+    >
+      Belum ada data kendaraan untuk dirangkum.
     </div>
   </div>
 
-  <div class="mt-8 rounded-2xl border border-default bg-surface p-6">
-    <div class="text-sm text-strong/70">Latest activity</div>
-    <div class="mt-4 space-y-3 text-sm text-strong/80">
-      <div class="flex items-center justify-between">
-        <span>Deployment completed</span>
-        <span class="text-strong/50">2m ago</span>
+  <div class="grid gap-6 lg:grid-cols-2">
+    <div class="rounded-2xl border border-default bg-surface p-6 shadow-sm">
+      <h3 class="text-lg font-semibold text-strong">Quick Links</h3>
+      <p class="mt-1 text-xs text-strong/60">Akses cepat ke modul yang sering digunakan.</p>
+      <div class="mt-4 grid gap-3">
+        <a
+          routerLink="/admin/vehicles"
+          class="flex items-center justify-between rounded-xl border border-default bg-app px-4 py-3 text-sm font-semibold text-strong transition hover:text-primary"
+        >
+          <span>Kelola Kendaraan</span>
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14" />
+            <path d="M13 6l6 6-6 6" />
+          </svg>
+        </a>
+        <a
+          routerLink="/admin/rentals"
+          class="flex items-center justify-between rounded-xl border border-default bg-app px-4 py-3 text-sm font-semibold text-strong transition hover:text-primary"
+        >
+          <span>Kelola Rental</span>
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14" />
+            <path d="M13 6l6 6-6 6" />
+          </svg>
+        </a>
       </div>
-      <div class="flex items-center justify-between">
-        <span>New admin invited</span>
-        <span class="text-strong/50">25m ago</span>
-      </div>
-      <div class="flex items-center justify-between">
-        <span>Billing synced</span>
-        <span class="text-strong/50">1h ago</span>
+    </div>
+
+    <div class="rounded-2xl border border-default bg-surface p-6 shadow-sm">
+      <h3 class="text-lg font-semibold text-strong">Status Breakdown</h3>
+      <p class="mt-1 text-xs text-strong/60">Persentase ketersediaan berdasarkan total armada.</p>
+      <div class="mt-4 space-y-4">
+        <div>
+          <div class="flex items-center justify-between text-xs text-strong/70">
+            <span>Available</span>
+            <span>{{ (summary.total ? (summary.available / summary.total * 100) : 0) | number }}%</span>
+          </div>
+          <div class="mt-2 h-2 rounded-full bg-app">
+            <div
+              class="h-full rounded-full bg-primary"
+              [ngStyle]="{ width: summary.total ? (summary.available / summary.total * 100) + '%' : '0%' }"
+            ></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between text-xs text-strong/70">
+            <span>Rented</span>
+            <span>{{ (summary.total ? (summary.rented / summary.total * 100) : 0) | number }}%</span>
+          </div>
+          <div class="mt-2 h-2 rounded-full bg-app">
+            <div
+              class="h-full rounded-full bg-primary/60"
+              [ngStyle]="{ width: summary.total ? (summary.rented / summary.total * 100) + '%' : '0%' }"
+            ></div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between text-xs text-strong/70">
+            <span>Maintenance</span>
+            <span>{{ (summary.total ? (summary.maintenance / summary.total * 100) : 0) | number }}%</span>
+          </div>
+          <div class="mt-2 h-2 rounded-full bg-app">
+            <div
+              class="h-full rounded-full bg-primary/40"
+              [ngStyle]="{ width: summary.total ? (summary.maintenance / summary.total * 100) + '%' : '0%' }"
+            ></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

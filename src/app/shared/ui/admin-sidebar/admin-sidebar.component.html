@@ -9,7 +9,7 @@
     <div class="flex items-center gap-3">
       <div class="h-10 w-10 rounded-2xl bg-primary/15"></div>
       <div class="text-sm font-semibold text-strong" [ngClass]="isMini ? 'lg:hidden' : ''">
-        Material Admin
+        Rental Admin
       </div>
     </div>
     <button
@@ -33,14 +33,14 @@
 
   <div>
     <p class="text-xs font-semibold uppercase tracking-[0.2em] text-strong/50" [ngClass]="isMini ? 'lg:hidden' : ''">
-      Dashboards
+      Menu Admin
     </p>
     <nav class="mt-4 flex flex-col gap-2">
       <a
-        routerLink="/admin/analytics"
+        routerLink="/admin/dashboard"
         routerLinkActive="bg-primary/15 text-primary"
         class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-strong/80 transition hover:bg-primary/10 hover:text-primary"
-        title="Analytics"
+        title="Dashboard"
         (click)="closeMobile.emit()"
       >
         <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
@@ -57,49 +57,69 @@
             <path d="M7 15v-4M12 15V9M17 15v-7" />
           </svg>
         </span>
-        <span [ngClass]="isMini ? 'lg:hidden' : ''">Analytics</span>
+        <span [ngClass]="isMini ? 'lg:hidden' : ''">Dashboard</span>
       </a>
       <a
-        routerLink="/admin/overview"
+        routerLink="/admin/vehicles"
         routerLinkActive="bg-primary/15 text-primary"
         class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-strong/80 transition hover:bg-primary/10 hover:text-primary"
-        title="Overview"
+        title="Kendaraan"
         (click)="closeMobile.emit()"
       >
         <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
           <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 4h16v16H4z" />
+            <path d="M3 16V9l2-4h14l2 4v7" />
+            <path d="M5 16a2 2 0 104 0H5z" />
+            <path d="M15 16a2 2 0 104 0h-4z" />
+            <path d="M3 10h18" />
           </svg>
         </span>
-        <span [ngClass]="isMini ? 'lg:hidden' : ''">Overview</span>
+        <span [ngClass]="isMini ? 'lg:hidden' : ''">Kendaraan</span>
       </a>
       <a
-        routerLink="/admin/reports"
+        routerLink="/admin/rentals"
         routerLinkActive="bg-primary/15 text-primary"
         class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-strong/80 transition hover:bg-primary/10 hover:text-primary"
-        title="Reports"
+        title="Rental"
         (click)="closeMobile.emit()"
       >
         <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
           <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M7 3h10v18H7z" />
+            <path d="M9 7h6M9 11h6M9 15h4" />
           </svg>
         </span>
-        <span [ngClass]="isMini ? 'lg:hidden' : ''">Reports</span>
+        <span [ngClass]="isMini ? 'lg:hidden' : ''">Rental</span>
       </a>
       <a
-        routerLink="/admin/automation"
+        routerLink="/admin/rentals/history"
         routerLinkActive="bg-primary/15 text-primary"
         class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-strong/80 transition hover:bg-primary/10 hover:text-primary"
-        title="Automation"
+        title="Riwayat Rental"
         (click)="closeMobile.emit()"
       >
         <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
           <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 3v18M3 12h18" />
+            <path d="M12 8v4l3 3" />
+            <path d="M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />
           </svg>
         </span>
-        <span [ngClass]="isMini ? 'lg:hidden' : ''">Automation</span>
+        <span [ngClass]="isMini ? 'lg:hidden' : ''">Riwayat Rental</span>
+      </a>
+      <a
+        routerLink="/admin/availability"
+        routerLinkActive="bg-primary/15 text-primary"
+        class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-strong/80 transition hover:bg-primary/10 hover:text-primary"
+        title="Kalender Ketersediaan"
+        (click)="closeMobile.emit()"
+      >
+        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 5h18v16H3z" />
+            <path d="M8 3v4M16 3v4M3 10h18" />
+          </svg>
+        </span>
+        <span [ngClass]="isMini ? 'lg:hidden' : ''">Kalender Ketersediaan</span>
       </a>
     </nav>
   </div>

@@ -1,18 +1,18 @@
 import { Routes } from '@angular/router';
-import { AnalyticsPageComponent } from './admin/analytics/analytics.component';
+import { DashboardPageComponent } from './admin/dashboard/dashboard';
 
 export const adminRoutes: Routes = [
   {
-    path: 'analytics',
-    component: AnalyticsPageComponent,
+    path: 'dashboard',
+    component: DashboardPageComponent,
     data: {
-      title: 'Analytics',
-      breadcrumbs: ['Dashboards', 'Analytics']
+      title: 'Dashboard',
+      breadcrumbs: ['Dashboards', 'Dashboard']
     }
   },
   {
     path: '',
-    redirectTo: 'analytics',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   }
 ];

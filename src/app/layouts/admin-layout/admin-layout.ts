@@ -28,8 +28,8 @@ import { UserResponse } from '../../shared/models/user.model';
   styleUrl: './admin-layout.css'
 })
 export class AdminLayoutComponent {
-  pageTitle = 'Analytics';
-  breadcrumbs: string[] = ['Dashboards', 'Analytics'];
+  pageTitle = 'Dashboard';
+  breadcrumbs: string[] = ['Dashboards', 'Dashboard'];
   isSidebarCollapsed = false;
   mobileSidebarOpen = false;
   isConfiguratorOpen = false;
