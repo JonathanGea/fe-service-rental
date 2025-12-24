@@ -1,0 +1,118 @@
+<section class="space-y-6" *ngIf="!isLoading">
+  <header class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h2 class="text-2xl font-semibold text-strong">Detail Kendaraan</h2>
+      <p class="text-sm text-strong/70">Informasi lengkap kendaraan dan pengaturan status.</p>
+    </div>
+    <div class="flex gap-2">
+      <a
+        *ngIf="vehicle"
+        [routerLink]="['/admin/vehicles', vehicle.id, 'edit']"
+        class="rounded-xl border border-default px-4 py-2 text-sm font-semibold text-strong transition hover:text-primary"
+      >
+        Edit Kendaraan
+      </a>
+      <a
+        *ngIf="vehicle"
+        [routerLink]="['/admin/vehicles', vehicle.id, 'photos']"
+        class="rounded-xl border border-default px-4 py-2 text-sm font-semibold text-strong/70 transition hover:text-primary"
+      >
+        Foto Kendaraan
+      </a>
+    </div>
+  </header>
+
+  <div class="rounded-2xl border border-default bg-surface p-6 shadow-sm" *ngIf="vehicle">
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+      <div class="space-y-4">
+        <div>
+          <p class="text-xs uppercase text-strong/50">Nama</p>
+          <p class="text-lg font-semibold text-strong">{{ vehicle.name }}</p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <p class="text-xs uppercase text-strong/50">Brand</p>
+            <p class="text-sm text-strong">{{ vehicle.brand }}</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase text-strong/50">Tipe</p>
+            <p class="text-sm text-strong">{{ vehicle.type }}</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase text-strong/50">Transmisi</p>
+            <p class="text-sm text-strong">{{ vehicle.transmission }}</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase text-strong/50">Kapasitas</p>
+            <p class="text-sm text-strong">{{ vehicle.capacity }}</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase text-strong/50">Tahun</p>
+            <p class="text-sm text-strong">{{ vehicle.year }}</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase text-strong/50">Harga/Hari</p>
+            <p class="text-sm text-strong">{{ vehicle.pricePerDay | number }}</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase text-strong/50">Category ID</p>
+            <p class="text-sm text-strong">{{ vehicle.categoryId || '-' }}</p>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-strong/50">Deskripsi</p>
+          <p class="text-sm text-strong/80">{{ vehicle.description || '-' }}</p>
+        </div>
+      </div>
+
+      <div class="w-full max-w-sm rounded-2xl border border-default bg-app p-5">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-xs uppercase text-strong/50">Status Saat Ini</p>
+            <span
+              class="mt-2 inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
+              [ngClass]="getStatusBadgeClass(vehicle.status)"
+            >
+              {{ vehicle.status }}
+            </span>
+          </div>
+        </div>
+        <div class="mt-4 space-y-2">
+          <label class="text-xs font-semibold text-strong">Update Status</label>
+          <select
+            [(ngModel)]="statusValue"
+            class="w-full rounded-xl border border-default bg-surface px-3 py-2 text-sm text-strong"
+          >
+            <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+          </select>
+        </div>
+        <button
+          type="button"
+          class="mt-4 w-full rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-70"
+          (click)="updateStatus()"
+          [disabled]="isUpdatingStatus"
+        >
+          {{ isUpdatingStatus ? 'Memperbarui...' : 'Simpan Status' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600"
+    *ngIf="errorMessage"
+  >
+    {{ errorMessage }}
+  </div>
+
+  <div
+    class="rounded-xl border border-default bg-app px-4 py-6 text-center text-sm text-strong/70"
+    *ngIf="!errorMessage && !vehicle"
+  >
+    Data kendaraan tidak ditemukan.
+  </div>
+</section>
+
+<div class="rounded-2xl border border-default bg-surface p-6 shadow-sm" *ngIf="isLoading">
+  <div class="h-40 animate-pulse rounded-xl border border-default bg-app"></div>
+</div>

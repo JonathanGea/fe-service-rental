@@ -1,0 +1,180 @@
+<section class="space-y-6">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h2 class="text-2xl font-semibold text-strong">Kendaraan</h2>
+      <p class="text-sm text-strong/70">Kelola daftar kendaraan dan status ketersediaannya.</p>
+    </div>
+    <a
+      routerLink="/admin/vehicles/new"
+      class="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+    >
+      <span>Tambah Kendaraan</span>
+      <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12h14" />
+      </svg>
+    </a>
+  </header>
+
+  <form
+    class="grid gap-4 rounded-2xl border border-default bg-surface p-4 sm:grid-cols-2 lg:grid-cols-4"
+    [formGroup]="filterForm"
+    (ngSubmit)="loadVehicles()"
+  >
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Status</label>
+      <select
+        formControlName="status"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      >
+        <option *ngFor="let option of statusOptions" [value]="option.value">{{ option.label }}</option>
+      </select>
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Pencarian</label>
+      <input
+        type="text"
+        formControlName="query"
+        placeholder="Nama/Brand"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Category ID</label>
+      <input
+        type="text"
+        formControlName="categoryId"
+        placeholder="UUID kategori"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="flex items-end gap-2">
+      <button
+        type="submit"
+        class="flex-1 rounded-xl border border-default bg-app px-4 py-2 text-sm font-semibold text-strong transition hover:text-primary"
+      >
+        Terapkan
+      </button>
+      <button
+        type="button"
+        class="flex-1 rounded-xl border border-default bg-app px-4 py-2 text-sm font-semibold text-strong/70 transition hover:text-primary"
+        (click)="resetFilters()"
+      >
+        Reset
+      </button>
+    </div>
+  </form>
+
+  <div class="rounded-2xl border border-default bg-surface p-4 shadow-sm">
+    <div class="overflow-x-auto" *ngIf="!isLoading">
+      <table class="w-full text-left text-sm">
+        <thead class="text-xs uppercase text-strong/50">
+          <tr>
+            <th class="pb-3">Nama</th>
+            <th class="pb-3">Brand</th>
+            <th class="pb-3">Tipe</th>
+            <th class="pb-3">Tahun</th>
+            <th class="pb-3">Harga/Hari</th>
+            <th class="pb-3">Status</th>
+            <th class="pb-3 text-right">Aksi</th>
+          </tr>
+        </thead>
+        <tbody class="text-strong/80">
+          <tr *ngFor="let vehicle of vehicles" class="border-t border-default">
+            <td class="py-3 font-semibold text-strong">{{ vehicle.name }}</td>
+            <td class="py-3">{{ vehicle.brand }}</td>
+            <td class="py-3">{{ vehicle.type }}</td>
+            <td class="py-3">{{ vehicle.year }}</td>
+            <td class="py-3">{{ vehicle.pricePerDay | number }}</td>
+            <td class="py-3">
+              <span
+                class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold"
+                [ngClass]="getStatusBadgeClass(vehicle.status)"
+              >
+                {{ vehicle.status || '-' }}
+              </span>
+            </td>
+            <td class="py-3">
+              <div class="flex justify-end gap-2">
+                <a
+                  class="rounded-lg border border-default px-3 py-1 text-xs font-semibold text-strong transition hover:text-primary"
+                  [routerLink]="['/admin/vehicles', vehicle.id]"
+                >
+                  Detail
+                </a>
+                <a
+                  class="rounded-lg border border-default px-3 py-1 text-xs font-semibold text-strong/70 transition hover:text-primary"
+                  [routerLink]="['/admin/vehicles', vehicle.id, 'edit']"
+                >
+                  Edit
+                </a>
+                <a
+                  class="rounded-lg border border-default px-3 py-1 text-xs font-semibold text-strong/70 transition hover:text-primary"
+                  [routerLink]="['/admin/vehicles', vehicle.id, 'photos']"
+                >
+                  Foto
+                </a>
+                <button
+                  type="button"
+                  class="rounded-lg border border-red-200 px-3 py-1 text-xs font-semibold text-red-600"
+                  (click)="confirmDelete(vehicle)"
+                >
+                  Hapus
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div
+        class="mt-6 rounded-xl border border-default bg-app px-4 py-6 text-center text-sm text-strong/70"
+        *ngIf="!errorMessage && vehicles.length === 0"
+      >
+        Data kendaraan belum tersedia.
+      </div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" *ngIf="isLoading">
+      <div class="h-20 animate-pulse rounded-xl border border-default bg-app"></div>
+      <div class="h-20 animate-pulse rounded-xl border border-default bg-app"></div>
+      <div class="h-20 animate-pulse rounded-xl border border-default bg-app"></div>
+      <div class="h-20 animate-pulse rounded-xl border border-default bg-app"></div>
+    </div>
+
+    <div
+      class="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600"
+      *ngIf="!isLoading && errorMessage"
+    >
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4"
+    *ngIf="vehicleToDelete"
+  >
+    <div class="w-full max-w-md rounded-2xl border border-default bg-surface p-6 shadow-lg">
+      <h3 class="text-lg font-semibold text-strong">Hapus Kendaraan</h3>
+      <p class="mt-2 text-sm text-strong/70">
+        Yakin ingin menghapus <span class="font-semibold">{{ vehicleToDelete.name }}</span>?
+      </p>
+      <div class="mt-6 flex justify-end gap-3">
+        <button
+          type="button"
+          class="rounded-xl border border-default px-4 py-2 text-sm font-semibold text-strong/70"
+          (click)="cancelDelete()"
+        >
+          Batal
+        </button>
+        <button
+          type="button"
+          class="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-70"
+          (click)="deleteVehicle()"
+          [disabled]="isDeleting"
+        >
+          {{ isDeleting ? 'Menghapus...' : 'Hapus' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

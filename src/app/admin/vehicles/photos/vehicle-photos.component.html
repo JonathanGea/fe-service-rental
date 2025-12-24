@@ -1,0 +1,114 @@
+<section class="space-y-6">
+  <header class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h2 class="text-2xl font-semibold text-strong">Foto Kendaraan</h2>
+      <p class="text-sm text-strong/70">Kelola galeri foto kendaraan.</p>
+    </div>
+    <a
+      routerLink="/admin/vehicles"
+      class="rounded-xl border border-default px-4 py-2 text-sm font-semibold text-strong/70 transition hover:text-primary"
+    >
+      Kembali ke Kendaraan
+    </a>
+  </header>
+
+  <div class="rounded-2xl border border-default bg-surface p-6 shadow-sm">
+    <div class="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-strong">Upload Foto</label>
+        <input
+          type="file"
+          accept="image/*"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+          (change)="onFileSelected($event)"
+        />
+        <p class="text-xs text-strong/60">Format gambar JPG/PNG disarankan.</p>
+      </div>
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-strong">Caption (opsional)</label>
+        <input
+          type="text"
+          [(ngModel)]="uploadCaption"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+          placeholder="Tampak depan"
+        />
+      </div>
+    </div>
+    <button
+      type="button"
+      class="mt-4 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-70"
+      (click)="uploadPhoto()"
+      [disabled]="isUploading"
+    >
+      {{ isUploading ? 'Mengunggah...' : 'Upload Foto' }}
+    </button>
+  </div>
+
+  <div class="rounded-2xl border border-default bg-surface p-6 shadow-sm" *ngIf="!isLoading">
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3" *ngIf="photos.length > 0">
+      <div class="overflow-hidden rounded-2xl border border-default bg-app" *ngFor="let photo of photos">
+        <div class="aspect-[4/3] bg-surface">
+          <img [src]="photo.url" [alt]="photo.caption || 'Foto kendaraan'" class="h-full w-full object-cover" />
+        </div>
+        <div class="space-y-3 p-4">
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-strong">Caption</label>
+            <input
+              type="text"
+              [ngModel]="drafts[photo.id]?.caption"
+              (ngModelChange)="updateDraft(photo.id, 'caption', $event)"
+              class="w-full rounded-xl border border-default bg-surface px-3 py-2 text-xs text-strong"
+            />
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-semibold text-strong">Urutan</label>
+            <input
+              type="number"
+              [ngModel]="drafts[photo.id]?.order"
+              (ngModelChange)="updateDraft(photo.id, 'order', $event)"
+              class="w-full rounded-xl border border-default bg-surface px-3 py-2 text-xs text-strong"
+            />
+          </div>
+          <div class="flex gap-2">
+            <button
+              type="button"
+              class="flex-1 rounded-xl border border-default px-3 py-2 text-xs font-semibold text-strong transition hover:text-primary"
+              (click)="savePhoto(photo.id)"
+              [disabled]="updatingPhotoId === photo.id"
+            >
+              {{ updatingPhotoId === photo.id ? 'Menyimpan...' : 'Simpan' }}
+            </button>
+            <button
+              type="button"
+              class="flex-1 rounded-xl border border-red-200 px-3 py-2 text-xs font-semibold text-red-600"
+              (click)="deletePhoto(photo.id)"
+              [disabled]="deletingPhotoId === photo.id"
+            >
+              {{ deletingPhotoId === photo.id ? 'Menghapus...' : 'Hapus' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="rounded-xl border border-default bg-app px-4 py-6 text-center text-sm text-strong/70"
+      *ngIf="photos.length === 0"
+    >
+      Belum ada foto kendaraan. Upload foto pertama untuk menampilkan galeri.
+    </div>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3" *ngIf="isLoading">
+    <div class="h-64 animate-pulse rounded-2xl border border-default bg-app"></div>
+    <div class="h-64 animate-pulse rounded-2xl border border-default bg-app"></div>
+    <div class="h-64 animate-pulse rounded-2xl border border-default bg-app"></div>
+  </div>
+
+  <div
+    class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600"
+    *ngIf="errorMessage"
+  >
+    {{ errorMessage }}
+  </div>
+</section>

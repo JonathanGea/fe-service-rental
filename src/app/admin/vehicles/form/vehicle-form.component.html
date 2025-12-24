@@ -1,0 +1,184 @@
+<section class="space-y-6">
+  <header class="space-y-2">
+    <h2 class="text-2xl font-semibold text-strong">
+      {{ isEditMode ? 'Edit Kendaraan' : 'Tambah Kendaraan' }}
+    </h2>
+    <p class="text-sm text-strong/70">Lengkapi data kendaraan sesuai form berikut.</p>
+  </header>
+
+  <div class="rounded-2xl border border-default bg-surface p-6 shadow-sm" *ngIf="!isLoading">
+    <form class="grid gap-4 md:grid-cols-2" [formGroup]="vehicleForm" (ngSubmit)="submitForm()">
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-strong">Nama Kendaraan</label>
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Avanza Veloz"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+          [ngClass]="{ 'border-red-400': vehicleForm.get('name')?.touched && vehicleForm.get('name')?.invalid }"
+        />
+        <p class="text-xs text-red-500" *ngIf="vehicleForm.get('name')?.touched && vehicleForm.get('name')?.invalid">
+          Nama wajib diisi.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-strong">Brand</label>
+        <input
+          type="text"
+          formControlName="brand"
+          placeholder="Toyota"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+          [ngClass]="{ 'border-red-400': vehicleForm.get('brand')?.touched && vehicleForm.get('brand')?.invalid }"
+        />
+        <p class="text-xs text-red-500" *ngIf="vehicleForm.get('brand')?.touched && vehicleForm.get('brand')?.invalid">
+          Brand wajib diisi.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-strong">Tipe</label>
+        <input
+          type="text"
+          formControlName="type"
+          placeholder="MPV"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+          [ngClass]="{ 'border-red-400': vehicleForm.get('type')?.touched && vehicleForm.get('type')?.invalid }"
+        />
+        <p class="text-xs text-red-500" *ngIf="vehicleForm.get('type')?.touched && vehicleForm.get('type')?.invalid">
+          Tipe wajib diisi.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-strong">Tahun</label>
+        <input
+          type="number"
+          formControlName="year"
+          placeholder="2022"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+          [ngClass]="{ 'border-red-400': vehicleForm.get('year')?.touched && vehicleForm.get('year')?.invalid }"
+        />
+        <p class="text-xs text-red-500" *ngIf="vehicleForm.get('year')?.touched && vehicleForm.get('year')?.invalid">
+          Tahun minimal 1.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-strong">Transmisi</label>
+        <input
+          type="text"
+          formControlName="transmission"
+          placeholder="Automatic"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+          [ngClass]="{ 'border-red-400': vehicleForm.get('transmission')?.touched && vehicleForm.get('transmission')?.invalid }"
+        />
+        <p
+          class="text-xs text-red-500"
+          *ngIf="vehicleForm.get('transmission')?.touched && vehicleForm.get('transmission')?.invalid"
+        >
+          Transmisi wajib diisi.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-strong">Kapasitas</label>
+        <input
+          type="number"
+          formControlName="capacity"
+          placeholder="6"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+          [ngClass]="{ 'border-red-400': vehicleForm.get('capacity')?.touched && vehicleForm.get('capacity')?.invalid }"
+        />
+        <p
+          class="text-xs text-red-500"
+          *ngIf="vehicleForm.get('capacity')?.touched && vehicleForm.get('capacity')?.invalid"
+        >
+          Kapasitas minimal 1.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-strong">Harga per Hari</label>
+        <input
+          type="number"
+          formControlName="pricePerDay"
+          placeholder="350000"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+          [ngClass]="{ 'border-red-400': vehicleForm.get('pricePerDay')?.touched && vehicleForm.get('pricePerDay')?.invalid }"
+        />
+        <p
+          class="text-xs text-red-500"
+          *ngIf="vehicleForm.get('pricePerDay')?.touched && vehicleForm.get('pricePerDay')?.invalid"
+        >
+          Harga minimal 0.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-strong">Status</label>
+        <select
+          formControlName="status"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+          [ngClass]="{ 'border-red-400': vehicleForm.get('status')?.touched && vehicleForm.get('status')?.invalid }"
+        >
+          <option value="" disabled>Pilih status</option>
+          <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+        </select>
+        <p
+          class="text-xs text-red-500"
+          *ngIf="vehicleForm.get('status')?.touched && vehicleForm.get('status')?.invalid"
+        >
+          Status wajib dipilih.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-strong">Category ID (opsional)</label>
+        <input
+          type="text"
+          formControlName="categoryId"
+          placeholder="UUID kategori"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+        />
+      </div>
+
+      <div class="space-y-2 md:col-span-2">
+        <label class="text-xs font-semibold text-strong">Deskripsi</label>
+        <textarea
+          rows="4"
+          formControlName="description"
+          placeholder="Deskripsi kendaraan"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+        ></textarea>
+      </div>
+
+      <div
+        class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600 md:col-span-2"
+        *ngIf="errorMessage"
+      >
+        {{ errorMessage }}
+      </div>
+
+      <div class="flex items-center gap-3 md:col-span-2">
+        <button
+          type="submit"
+          class="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-70"
+          [disabled]="isSaving"
+        >
+          {{ isSaving ? 'Menyimpan...' : 'Simpan' }}
+        </button>
+        <a
+          routerLink="/admin/vehicles"
+          class="rounded-xl border border-default px-4 py-2 text-sm font-semibold text-strong/70"
+        >
+          Batal
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <div class="rounded-2xl border border-default bg-surface p-6 shadow-sm" *ngIf="isLoading">
+    <div class="h-40 animate-pulse rounded-xl border border-default bg-app"></div>
+  </div>
+</section>

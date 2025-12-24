@@ -48,7 +48,7 @@ export class LoginPageComponent {
       )
       .subscribe({
         next: () => {
-          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/admin';
+          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/admin/dashboard';
           this.router.navigateByUrl(returnUrl);
         },
         error: (error: Error) => {
