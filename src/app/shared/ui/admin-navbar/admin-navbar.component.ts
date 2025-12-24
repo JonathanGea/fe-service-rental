@@ -11,11 +11,12 @@ import {
 import { NavigationStart, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
+import { ClickOutsideDirective } from '../../directives/click-outside.directive';
 
 @Component({
   selector: 'app-admin-navbar',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf],
+  imports: [ClickOutsideDirective, NgClass, NgFor, NgIf],
   templateUrl: './admin-navbar.component.html',
   styleUrl: './admin-navbar.component.css'
 })
@@ -23,14 +24,18 @@ export class AdminNavbarComponent {
   @Input() pageTitle = 'Analytics';
   @Input() breadcrumbs: string[] = ['Dashboards', 'Analytics'];
   @Input() isMobileSidebarOpen = false;
+  @Input() userEmail = '';
+  @Input() userRole = '';
   @Output() onToggleCollapse = new EventEmitter<void>();
   @Output() onOpenMobileSidebar = new EventEmitter<void>();
   @Output() onToggleMobileSidebar = new EventEmitter<void>();
   @Output() searchQueryChange = new EventEmitter<string>();
   @Output() searchSubmit = new EventEmitter<string>();
+  @Output() onLogout = new EventEmitter<void>();
 
   notificationsCount = 11;
   isScrolled = false;
+  isUserMenuOpen = false;
 
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
@@ -41,7 +46,9 @@ export class AdminNavbarComponent {
         filter((event): event is NavigationStart => event instanceof NavigationStart),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe();
+      .subscribe(() => {
+        this.isUserMenuOpen = false;
+      });
   }
 
   onToggleMenu(): void {
@@ -64,8 +71,26 @@ export class AdminNavbarComponent {
     this.searchSubmit.emit(value.trim());
   }
 
+  toggleUserMenu(): void {
+    this.isUserMenuOpen = !this.isUserMenuOpen;
+  }
+
+  closeUserMenu(): void {
+    this.isUserMenuOpen = false;
+  }
+
+  onLogoutClick(): void {
+    this.isUserMenuOpen = false;
+    this.onLogout.emit();
+  }
+
   @HostListener('window:scroll')
   onWindowScroll(): void {
     this.isScrolled = window.scrollY > 10;
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    this.closeUserMenu();
   }
 }

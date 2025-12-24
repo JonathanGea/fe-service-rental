@@ -19,9 +19,12 @@
         [pageTitle]="pageTitle"
         [breadcrumbs]="breadcrumbs"
         [isMobileSidebarOpen]="mobileSidebarOpen"
+        [userEmail]="userProfile?.email ?? ''"
+        [userRole]="userProfile?.role ?? ''"
         (onToggleCollapse)="toggleSidenavMini()"
         (onOpenMobileSidebar)="onOpenMobileSidebar()"
         (onToggleMobileSidebar)="closeMobileSidebar()"
+        (onLogout)="onLogout()"
       />
 
       <main class="flex-1 px-4 py-6 sm:px-6 lg:px-8">

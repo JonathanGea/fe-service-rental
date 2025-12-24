@@ -11,6 +11,9 @@ import { filter } from 'rxjs/operators';
 import { AdminNavbarComponent } from '../../shared/ui/admin-navbar/admin-navbar.component';
 import { AdminSidebarComponent } from '../../shared/ui/admin-sidebar/admin-sidebar.component';
 import { OverlayBackdropComponent } from '../../shared/ui/overlay-backdrop/overlay-backdrop.component';
+import { AuthService } from '../../shared/services/auth.service';
+import { UserService } from '../../shared/services/user.service';
+import { UserResponse } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-admin-layout',
@@ -33,11 +36,14 @@ export class AdminLayoutComponent {
   isNavbarFixed = true;
   isSidenavMini = false;
   isDarkMode = false;
+  userProfile: UserResponse | null = null;
 
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
   private readonly document = inject(DOCUMENT);
+  private readonly authService = inject(AuthService);
+  private readonly userService = inject(UserService);
 
   constructor() {
     this.router.events
@@ -50,6 +56,18 @@ export class AdminLayoutComponent {
         const data = activeRoute.snapshot.data;
         this.pageTitle = data['title'] ?? this.pageTitle;
         this.breadcrumbs = data['breadcrumbs'] ?? this.breadcrumbs;
+      });
+
+    this.userService
+      .getMe()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (user) => {
+          this.userProfile = user;
+        },
+        error: () => {
+          this.userProfile = null;
+        }
       });
   }
 
@@ -89,7 +107,10 @@ export class AdminLayoutComponent {
     this.isDarkMode = !this.isDarkMode;
   }
 
-  onLogout(): void {}
+  onLogout(): void {
+    this.authService.logout();
+    this.router.navigate(['/admin/login']);
+  }
 
   private getDeepestChild(route: ActivatedRoute): ActivatedRoute {
     let current = route;
