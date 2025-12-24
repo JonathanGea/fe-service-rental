@@ -1,0 +1,16 @@
+<div class="relative" appClickOutside (appClickOutside)="close.emit()">
+  <ng-content select="[menuTrigger]"></ng-content>
+
+  <div
+    [id]="menuId"
+    role="menu"
+    class="absolute z-50 mt-2 w-72 origin-top-right rounded-2xl border border-default bg-surface p-2 text-sm shadow-xl transition duration-150 ease-out"
+    [ngClass]="[
+      align === 'right' ? 'right-0' : 'left-0',
+      isOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0',
+      panelClass
+    ]"
+  >
+    <ng-content select="[menuContent]"></ng-content>
+  </div>
+</div>

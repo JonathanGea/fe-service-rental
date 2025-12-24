@@ -1,0 +1,51 @@
+<section>
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <div>
+      <p class="text-xs uppercase tracking-[0.3em] text-strong/60">Overview</p>
+      <h1 class="mt-2 text-3xl font-semibold">Dashboard</h1>
+      <p class="mt-2 text-sm text-strong/70">Quick snapshot of system activity.</p>
+    </div>
+    <button
+      class="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+    >
+      Create report
+    </button>
+  </div>
+
+  <div class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div class="rounded-2xl border border-default bg-surface p-4">
+      <div class="text-xs text-strong/60">Active users</div>
+      <div class="mt-3 text-2xl font-semibold">1,284</div>
+    </div>
+    <div class="rounded-2xl border border-default bg-surface p-4">
+      <div class="text-xs text-strong/60">Errors</div>
+      <div class="mt-3 text-2xl font-semibold">3</div>
+    </div>
+    <div class="rounded-2xl border border-default bg-surface p-4">
+      <div class="text-xs text-strong/60">Latency</div>
+      <div class="mt-3 text-2xl font-semibold">120ms</div>
+    </div>
+    <div class="rounded-2xl border border-default bg-surface p-4">
+      <div class="text-xs text-strong/60">Queues</div>
+      <div class="mt-3 text-2xl font-semibold">8</div>
+    </div>
+  </div>
+
+  <div class="mt-8 rounded-2xl border border-default bg-surface p-6">
+    <div class="text-sm text-strong/70">Latest activity</div>
+    <div class="mt-4 space-y-3 text-sm text-strong/80">
+      <div class="flex items-center justify-between">
+        <span>Deployment completed</span>
+        <span class="text-strong/50">2m ago</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <span>New admin invited</span>
+        <span class="text-strong/50">25m ago</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <span>Billing synced</span>
+        <span class="text-strong/50">1h ago</span>
+      </div>
+    </div>
+  </div>
+</section>

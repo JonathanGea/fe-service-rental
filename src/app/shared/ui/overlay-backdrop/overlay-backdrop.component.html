@@ -1,0 +1,5 @@
+<div
+  class="fixed inset-0 bg-strong/30 backdrop-blur-sm transition"
+  [ngClass]="[open ? 'opacity-100' : 'pointer-events-none opacity-0', className]"
+  (click)="backdropClick.emit()"
+></div>

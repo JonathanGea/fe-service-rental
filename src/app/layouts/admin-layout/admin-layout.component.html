@@ -1,0 +1,123 @@
+<div class="min-h-screen bg-app text-strong">
+  <div class="relative flex min-h-screen">
+    <app-overlay-backdrop
+      [open]="mobileSidebarOpen"
+      className="z-30 lg:hidden"
+      (backdropClick)="closeMobileSidebar()"
+    />
+
+    <app-admin-sidebar
+      class="transition-[width] duration-300 ease-out"
+      [isMini]="isSidenavMini"
+      [isMobileOpen]="mobileSidebarOpen"
+      (closeMobile)="closeMobileSidebar()"
+    />
+
+    <div class="flex w-full min-w-0 flex-1 flex-col">
+      <app-admin-navbar
+        class="flex-none"
+        [pageTitle]="pageTitle"
+        [breadcrumbs]="breadcrumbs"
+        [isMobileSidebarOpen]="mobileSidebarOpen"
+        (onToggleCollapse)="toggleSidenavMini()"
+        (onOpenMobileSidebar)="onOpenMobileSidebar()"
+        (onToggleMobileSidebar)="closeMobileSidebar()"
+      />
+
+      <main class="flex-1 px-4 py-6 sm:px-6 lg:px-8">
+        <router-outlet />
+      </main>
+    </div>
+  </div>
+
+  <app-overlay-backdrop
+    [open]="isConfiguratorOpen"
+    className="z-40"
+    (backdropClick)="closeConfigurator()"
+  />
+
+  <aside
+    class="fixed right-0 top-0 z-50 h-full w-80 translate-x-full border-l border-default bg-surface p-6 shadow-lg transition"
+    [ngClass]="isConfiguratorOpen ? 'translate-x-0' : 'translate-x-full'"
+    aria-label="Configurator"
+  >
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-lg font-semibold text-strong">Configurator</h2>
+        <p class="text-sm text-strong/60">Customize interface settings</p>
+      </div>
+      <button
+        type="button"
+        aria-label="Close configurator"
+        class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-default text-strong transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+        (click)="closeConfigurator()"
+      >
+        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6l12 12M18 6l-12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="mt-6 space-y-5">
+      <div class="flex items-center justify-between rounded-xl border border-default bg-app px-4 py-3">
+        <div>
+          <p class="text-sm font-semibold text-strong">Navbar Fixed</p>
+          <p class="text-xs text-strong/60">Keep navbar pinned to top</p>
+        </div>
+        <button
+          type="button"
+          role="switch"
+          [attr.aria-checked]="isNavbarFixed"
+          class="relative h-6 w-11 rounded-full border border-default transition"
+          [ngClass]="isNavbarFixed ? 'bg-primary/20' : 'bg-surface'"
+          (click)="toggleNavbarFixed()"
+        >
+          <span
+            class="absolute left-1 top-1 h-4 w-4 rounded-full bg-primary transition"
+            [ngClass]="isNavbarFixed ? 'translate-x-5' : ''"
+          ></span>
+        </button>
+      </div>
+
+      <div class="flex items-center justify-between rounded-xl border border-default bg-app px-4 py-3">
+        <div>
+          <p class="text-sm font-semibold text-strong">Sidenav Mini</p>
+          <p class="text-xs text-strong/60">Compact navigation bar</p>
+        </div>
+        <button
+          type="button"
+          role="switch"
+          [attr.aria-checked]="isSidenavMini"
+          class="relative h-6 w-11 rounded-full border border-default transition"
+          [ngClass]="isSidenavMini ? 'bg-primary/20' : 'bg-surface'"
+          (click)="toggleSidenavMini()"
+        >
+          <span
+            class="absolute left-1 top-1 h-4 w-4 rounded-full bg-primary transition"
+            [ngClass]="isSidenavMini ? 'translate-x-5' : ''"
+          ></span>
+        </button>
+      </div>
+
+      <div class="flex items-center justify-between rounded-xl border border-default bg-app px-4 py-3">
+        <div>
+          <p class="text-sm font-semibold text-strong">Dark Mode</p>
+          <p class="text-xs text-strong/60">Switch theme appearance</p>
+        </div>
+        <button
+          type="button"
+          role="switch"
+          [attr.aria-checked]="isDarkMode"
+          class="relative h-6 w-11 rounded-full border border-default transition"
+          [ngClass]="isDarkMode ? 'bg-primary/20' : 'bg-surface'"
+          (click)="toggleDarkMode()"
+        >
+          <span
+            class="absolute left-1 top-1 h-4 w-4 rounded-full bg-primary transition"
+            [ngClass]="isDarkMode ? 'translate-x-5' : ''"
+          ></span>
+        </button>
+      </div>
+    </div>
+  </aside>
+</div>

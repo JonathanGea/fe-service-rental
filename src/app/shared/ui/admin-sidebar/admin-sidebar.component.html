@@ -1,0 +1,110 @@
+<aside
+  class="fixed inset-y-0 left-0 z-40 flex w-64 flex-col gap-6 border-r border-default bg-surface px-4 pb-6 pt-6 transition-[width,transform] duration-300 ease-out lg:sticky lg:top-0 lg:h-screen lg:translate-x-0"
+  [ngClass]="[
+    isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
+    isMini ? 'lg:w-20' : 'lg:w-64'
+  ]"
+>
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="h-10 w-10 rounded-2xl bg-primary/15"></div>
+      <div class="text-sm font-semibold text-strong" [ngClass]="isMini ? 'lg:hidden' : ''">
+        Material Admin
+      </div>
+    </div>
+    <button
+      type="button"
+      class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-default text-strong transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 lg:hidden"
+      aria-label="Close sidebar"
+      (click)="closeMobile.emit()"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        class="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <path d="M6 6l12 12M18 6l-12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <div>
+    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-strong/50" [ngClass]="isMini ? 'lg:hidden' : ''">
+      Dashboards
+    </p>
+    <nav class="mt-4 flex flex-col gap-2">
+      <a
+        routerLink="/admin/analytics"
+        routerLinkActive="bg-primary/15 text-primary"
+        class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-strong/80 transition hover:bg-primary/10 hover:text-primary"
+        title="Analytics"
+        (click)="closeMobile.emit()"
+      >
+        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <svg
+            viewBox="0 0 24 24"
+            class="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 3v18h18" />
+            <path d="M7 15v-4M12 15V9M17 15v-7" />
+          </svg>
+        </span>
+        <span [ngClass]="isMini ? 'lg:hidden' : ''">Analytics</span>
+      </a>
+      <a
+        routerLink="/admin/overview"
+        routerLinkActive="bg-primary/15 text-primary"
+        class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-strong/80 transition hover:bg-primary/10 hover:text-primary"
+        title="Overview"
+        (click)="closeMobile.emit()"
+      >
+        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16v16H4z" />
+          </svg>
+        </span>
+        <span [ngClass]="isMini ? 'lg:hidden' : ''">Overview</span>
+      </a>
+      <a
+        routerLink="/admin/reports"
+        routerLinkActive="bg-primary/15 text-primary"
+        class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-strong/80 transition hover:bg-primary/10 hover:text-primary"
+        title="Reports"
+        (click)="closeMobile.emit()"
+      >
+        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 3h10v18H7z" />
+          </svg>
+        </span>
+        <span [ngClass]="isMini ? 'lg:hidden' : ''">Reports</span>
+      </a>
+      <a
+        routerLink="/admin/automation"
+        routerLinkActive="bg-primary/15 text-primary"
+        class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-strong/80 transition hover:bg-primary/10 hover:text-primary"
+        title="Automation"
+        (click)="closeMobile.emit()"
+      >
+        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3v18M3 12h18" />
+          </svg>
+        </span>
+        <span [ngClass]="isMini ? 'lg:hidden' : ''">Automation</span>
+      </a>
+    </nav>
+  </div>
+
+  <div class="mt-auto rounded-2xl bg-primary/10 p-4 text-xs text-strong/70" [ngClass]="isMini ? 'lg:hidden' : ''">
+    Need help? Visit our docs for onboarding guides.
+  </div>
+</aside>

@@ -1,0 +1,25 @@
+<div class="min-h-screen bg-app text-strong">
+  <div class="grid min-h-screen grid-cols-1 md:grid-cols-[240px_1fr]">
+    <aside class="border-b border-default bg-surface px-6 py-8 md:border-b-0 md:border-r">
+      <div class="text-xs uppercase tracking-[0.3em] text-strong/60">Admin</div>
+      <div class="mt-2 text-xl font-semibold">Control Center</div>
+      <nav class="mt-8 flex flex-col gap-3 text-sm text-strong/70">
+        <a routerLink="/admin" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+        <a routerLink="/" routerLinkActive="text-primary">Back to site</a>
+      </nav>
+    </aside>
+
+    <div class="flex min-h-screen flex-col">
+      <header class="border-b border-default px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="text-sm text-strong/70">Admin Dashboard</div>
+          <div class="rounded-full bg-app px-3 py-1 text-xs text-strong">Admin User</div>
+        </div>
+      </header>
+
+      <main class="flex-1 px-6 py-8">
+        <router-outlet />
+      </main>
+    </div>
+  </div>
+</div>
