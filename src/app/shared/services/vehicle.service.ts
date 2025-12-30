@@ -13,7 +13,7 @@ import { VehiclePhotoResponse, VehiclePhotoUpdateRequest } from '../models/vehic
 export class VehicleService {
   constructor(private readonly http: HttpClient, private readonly authService: AuthService) {}
 
-  getVehicles(status?: string, query?: string): Observable<VehicleResponse[]> {
+  getVehicles(status?: string, query?: string, includeAuth = true): Observable<VehicleResponse[]> {
     let params = new HttpParams();
     if (status) {
       params = params.set('status', status);
@@ -25,7 +25,7 @@ export class VehicleService {
     return this.http
       .get<ApiResponse<VehicleResponse[]>>(`${environment.apiBaseUrl}api/vehicles`, {
         params,
-        headers: this.buildAuthHeaders()
+        headers: includeAuth ? this.buildAuthHeaders() : undefined
       })
       .pipe(
         map((response) => {

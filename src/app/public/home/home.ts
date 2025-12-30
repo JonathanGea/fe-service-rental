@@ -46,7 +46,7 @@ export class HomePageComponent implements OnInit {
     this.errorMessage = '';
 
     this.vehicleService
-      .getVehicles()
+      .getVehicles('', '', false)
       .pipe(
         finalize(() => {
           this.isLoading = false;
