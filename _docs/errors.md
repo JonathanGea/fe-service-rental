@@ -70,3 +70,63 @@ Error: It looks like you're trying to use `tailwindcss` directly as a PostCSS pl
 
 **Perbaikan yang diterapkan di repo ini**:
 - Menambahkan `postcss.config.json` berisi konfigurasi plugin PostCSS yang kompatibel dengan Tailwind v4.
+
+## Public home data tidak muncul sampai user klik
+
+**Waktu**: saat akses halaman publik (home)
+
+**Gejala**:
+- Daftar kendaraan kosong saat halaman pertama kali dirender.
+- Data baru terlihat setelah ada interaksi (klik filter).
+
+**Analisa singkat**:
+- `HomePageComponent` belum dideklarasikan sebagai standalone, tetapi memakai `imports` untuk `NgIf`, `NgFor`, dan `DecimalPipe`.
+- Pada app yang seluruhnya standalone, ini membuat directive/pipes tidak terdaftar untuk render awal, sehingga tampilan tidak diperbarui secara benar.
+
+**Rekomendasi perbaikan**:
+1. Set `standalone: true` pada `HomePageComponent`.
+2. Pindahkan `loadVehicles()` ke `ngOnInit()` agar lifecycle render konsisten.
+
+**Perbaikan yang diterapkan di repo ini**:
+- Menambahkan `standalone: true` dan memindahkan fetch data ke `ngOnInit()` di `src/app/public/home/home.ts`.
+
+## Data hanya muncul setelah klik di semua halaman
+
+**Waktu**: setelah integrasi data API di berbagai halaman (public + admin)
+
+**Gejala**:
+- Data list/summary kosong saat load awal.
+- Data baru tampil setelah user melakukan klik/scroll (trigger change detection manual via event).
+
+**Analisa singkat**:
+- Aplikasi berjalan tanpa `zone.js`, sehingga perubahan dari async (HTTP/RxJS) tidak otomatis memicu change detection.
+- UI hanya re-render ketika ada event DOM dari user (klik/scroll).
+
+**Rekomendasi perbaikan**:
+1. Tambahkan `zone.js` sebagai dependency runtime.
+2. Import `zone.js` di entrypoint (`src/main.ts`) agar change detection berjalan normal.
+3. Pastikan change detection zone-based diaktifkan eksplisit via `provideZoneChangeDetection()`.
+
+**Perbaikan yang diterapkan di repo ini**:
+- Menambahkan `zone.js` di `package.json`.
+- Menambahkan `import 'zone.js';` di `src/main.ts`.
+- Menjalankan `npm install` untuk mengunduh `zone.js` ke `node_modules`.
+- Menambahkan `provideZoneChangeDetection()` pada `src/app/app.config.ts`.
+
+## Build gagal karena modul zone.js tidak ditemukan
+
+**Waktu**: setelah menambahkan `import 'zone.js';` di entrypoint
+
+**Gejala**:
+- Build/serve gagal dengan error `Failed to resolve import "zone.js"`.
+
+**Analisa singkat**:
+- Dependency `zone.js` belum terpasang di `node_modules`.
+
+**Rekomendasi perbaikan**:
+1. Jalankan `npm install` (atau `npm install zone.js`) untuk mengunduh dependency.
+2. Restart dev server agar Vite/Angular melakukan rebuild ulang.
+
+**Perbaikan yang diterapkan di repo ini**:
+- Dependency `zone.js` sudah ditambahkan ke `package.json`.
+ - `node_modules/zone.js` kini tersedia setelah `npm install`.
