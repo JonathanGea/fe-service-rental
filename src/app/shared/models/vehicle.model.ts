@@ -1,7 +1,9 @@
 export interface VehicleResponse {
   id: string;
   name: string;
+  brandId: string;
   brand: string;
+  vehicleTypeId: string;
   type: string;
   year: number;
   transmission: string;
@@ -9,20 +11,18 @@ export interface VehicleResponse {
   pricePerDay: number;
   description?: string;
   status: string;
-  categoryId?: string;
 }
 
 export interface VehicleRequest {
   name: string;
-  brand: string;
-  type: string;
+  brandId: string;
+  vehicleTypeId: string;
   year: number;
   transmission: string;
   capacity: number;
   pricePerDay: number;
   description?: string;
   status: string;
-  categoryId?: string;
 }
 
 export interface VehicleStatusRequest {

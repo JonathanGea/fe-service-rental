@@ -1,0 +1,56 @@
+<section class="space-y-6">
+  <header class="space-y-2">
+    <h2 class="text-2xl font-semibold text-strong">
+      {{ isEditMode ? 'Edit Tipe Kendaraan' : 'Tambah Tipe Kendaraan' }}
+    </h2>
+    <p class="text-sm text-strong/70">Lengkapi data tipe kendaraan.</p>
+  </header>
+
+  <div class="rounded-2xl border border-default bg-surface p-6 shadow-sm" *ngIf="!isLoading">
+    <form class="grid gap-4 md:grid-cols-2" [formGroup]="vehicleTypeForm" (ngSubmit)="submitForm()">
+      <div class="space-y-2 md:col-span-2">
+        <label class="text-xs font-semibold text-strong">Nama Tipe</label>
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="MPV"
+          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+          [ngClass]="{ 'border-red-400': vehicleTypeForm.get('name')?.touched && vehicleTypeForm.get('name')?.invalid }"
+        />
+        <p
+          class="text-xs text-red-500"
+          *ngIf="vehicleTypeForm.get('name')?.touched && vehicleTypeForm.get('name')?.invalid"
+        >
+          Nama tipe wajib diisi.
+        </p>
+      </div>
+
+      <div
+        class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600 md:col-span-2"
+        *ngIf="errorMessage"
+      >
+        {{ errorMessage }}
+      </div>
+
+      <div class="flex items-center gap-3 md:col-span-2">
+        <button
+          type="submit"
+          class="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-70"
+          [disabled]="isSaving"
+        >
+          {{ isSaving ? 'Menyimpan...' : 'Simpan' }}
+        </button>
+        <a
+          routerLink="/admin/vehicle-types"
+          class="rounded-xl border border-default px-4 py-2 text-sm font-semibold text-strong/70"
+        >
+          Batal
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <div class="rounded-2xl border border-default bg-surface p-6 shadow-sm" *ngIf="isLoading">
+    <div class="h-40 animate-pulse rounded-xl border border-default bg-app"></div>
+  </div>
+</section>

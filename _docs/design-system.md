@@ -2,7 +2,19 @@
 
 ## Icon System
 
-Project ini menggunakan [Heroicons](https://heroicons.com/) sebagai sumber ikon utama untuk UI.
+Project ini menggunakan [Font Awesome](https://fontawesome.com/) sebagai sumber ikon utama untuk UI.
+
+Guidelines:
+- Gunakan elemen `i` dengan kelas `fa-solid`, `fa-regular`, atau `fa-brands`.
+- Sesuaikan ukuran dengan utility font-size (`text-base`, `text-lg`, `text-2xl`) dan warna dengan kelas teks yang ada.
+- Hindari inline SVG untuk ikon UI.
+- Font Awesome dimuat via CDN di `src/index.html`.
+
+Contoh:
+```html
+<i class="fa-solid fa-car-side text-base text-primary"></i>
+<i class="fa-regular fa-bell text-lg text-strong/70"></i>
+```
 
 ## Admin Palette
 

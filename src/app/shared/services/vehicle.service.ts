@@ -13,16 +13,13 @@ import { VehiclePhotoResponse, VehiclePhotoUpdateRequest } from '../models/vehic
 export class VehicleService {
   constructor(private readonly http: HttpClient, private readonly authService: AuthService) {}
 
-  getVehicles(status?: string, query?: string, categoryId?: string): Observable<VehicleResponse[]> {
+  getVehicles(status?: string, query?: string): Observable<VehicleResponse[]> {
     let params = new HttpParams();
     if (status) {
       params = params.set('status', status);
     }
     if (query) {
       params = params.set('q', query);
-    }
-    if (categoryId) {
-      params = params.set('categoryId', categoryId);
     }
 
     return this.http
@@ -40,6 +37,7 @@ export class VehicleService {
         catchError((error) => throwError(() => new Error(this.extractHttpErrorMessage(error))))
       );
   }
+
 
   getVehicle(id: string): Observable<VehicleResponse> {
     return this.http

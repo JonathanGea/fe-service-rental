@@ -20,8 +20,7 @@ export class VehiclesListPageComponent {
 
   readonly filterForm = this.formBuilder.group({
     status: [''],
-    query: [''],
-    categoryId: ['']
+    query: ['']
   });
 
   vehicles: VehicleResponse[] = [];
@@ -43,12 +42,12 @@ export class VehiclesListPageComponent {
   }
 
   loadVehicles(): void {
-    const { status, query, categoryId } = this.filterForm.value;
+    const { status, query } = this.filterForm.value;
     this.isLoading = true;
     this.errorMessage = '';
 
     this.vehicleService
-      .getVehicles(status ?? '', query ?? '', categoryId ?? '')
+      .getVehicles(status ?? '', query ?? '')
       .pipe(
         finalize(() => {
           this.isLoading = false;
@@ -69,8 +68,7 @@ export class VehiclesListPageComponent {
   resetFilters(): void {
     this.filterForm.reset({
       status: '',
-      query: '',
-      categoryId: ''
+      query: ''
     });
     this.loadVehicles();
   }

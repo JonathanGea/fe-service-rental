@@ -1,0 +1,64 @@
+<section class="space-y-6">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h2 class="text-2xl font-semibold text-strong">Tipe Kendaraan</h2>
+      <p class="text-sm text-strong/70">Kelola daftar tipe kendaraan.</p>
+    </div>
+    <a
+      routerLink="/admin/vehicle-types/new"
+      class="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+    >
+      <span>Tambah Tipe</span>
+      <i class="fa-solid fa-plus text-base" aria-hidden="true"></i>
+    </a>
+  </header>
+
+  <div class="rounded-2xl border border-default bg-surface p-4 shadow-sm">
+    <div class="overflow-x-auto" *ngIf="!isLoading">
+      <table class="w-full text-left text-sm">
+        <thead class="text-xs uppercase text-strong/50">
+          <tr>
+            <th class="pb-3">Nama</th>
+            <th class="pb-3 text-right">Aksi</th>
+          </tr>
+        </thead>
+        <tbody class="text-strong/80">
+          <tr *ngFor="let type of vehicleTypes" class="border-t border-default">
+            <td class="py-3 font-semibold text-strong">{{ type.name }}</td>
+            <td class="py-3">
+              <div class="flex justify-end gap-2">
+                <a
+                  class="rounded-lg border border-default px-3 py-1 text-xs font-semibold text-strong/70 transition hover:text-primary"
+                  [routerLink]="['/admin/vehicle-types', type.id, 'edit']"
+                >
+                  Edit
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div
+        class="mt-6 rounded-xl border border-default bg-app px-4 py-6 text-center text-sm text-strong/70"
+        *ngIf="!errorMessage && vehicleTypes.length === 0"
+      >
+        Data tipe kendaraan belum tersedia.
+      </div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" *ngIf="isLoading">
+      <div class="h-20 animate-pulse rounded-xl border border-default bg-app"></div>
+      <div class="h-20 animate-pulse rounded-xl border border-default bg-app"></div>
+      <div class="h-20 animate-pulse rounded-xl border border-default bg-app"></div>
+      <div class="h-20 animate-pulse rounded-xl border border-default bg-app"></div>
+    </div>
+
+    <div
+      class="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600"
+      *ngIf="!isLoading && errorMessage"
+    >
+      {{ errorMessage }}
+    </div>
+  </div>
+</section>

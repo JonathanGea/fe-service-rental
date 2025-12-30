@@ -24,29 +24,43 @@
 
       <div class="space-y-2">
         <label class="text-xs font-semibold text-strong">Brand</label>
-        <input
-          type="text"
-          formControlName="brand"
-          placeholder="Toyota"
+        <select
+          formControlName="brandId"
           class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
-          [ngClass]="{ 'border-red-400': vehicleForm.get('brand')?.touched && vehicleForm.get('brand')?.invalid }"
-        />
-        <p class="text-xs text-red-500" *ngIf="vehicleForm.get('brand')?.touched && vehicleForm.get('brand')?.invalid">
-          Brand wajib diisi.
+          [disabled]="isLoadingOptions || brands.length === 0"
+          [ngClass]="{ 'border-red-400': vehicleForm.get('brandId')?.touched && vehicleForm.get('brandId')?.invalid }"
+        >
+          <option value="" disabled>
+            {{ isLoadingOptions ? 'Memuat brand...' : (brands.length ? 'Pilih brand' : 'Brand belum tersedia') }}
+          </option>
+          <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
+        </select>
+        <p
+          class="text-xs text-red-500"
+          *ngIf="vehicleForm.get('brandId')?.touched && vehicleForm.get('brandId')?.invalid"
+        >
+          Brand wajib dipilih.
         </p>
       </div>
 
       <div class="space-y-2">
-        <label class="text-xs font-semibold text-strong">Tipe</label>
-        <input
-          type="text"
-          formControlName="type"
-          placeholder="MPV"
+        <label class="text-xs font-semibold text-strong">Tipe Kendaraan</label>
+        <select
+          formControlName="vehicleTypeId"
           class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
-          [ngClass]="{ 'border-red-400': vehicleForm.get('type')?.touched && vehicleForm.get('type')?.invalid }"
-        />
-        <p class="text-xs text-red-500" *ngIf="vehicleForm.get('type')?.touched && vehicleForm.get('type')?.invalid">
-          Tipe wajib diisi.
+          [disabled]="isLoadingOptions || vehicleTypes.length === 0"
+          [ngClass]="{ 'border-red-400': vehicleForm.get('vehicleTypeId')?.touched && vehicleForm.get('vehicleTypeId')?.invalid }"
+        >
+          <option value="" disabled>
+            {{ isLoadingOptions ? 'Memuat tipe kendaraan...' : (vehicleTypes.length ? 'Pilih tipe kendaraan' : 'Tipe kendaraan belum tersedia') }}
+          </option>
+          <option *ngFor="let type of vehicleTypes" [value]="type.id">{{ type.name }}</option>
+        </select>
+        <p
+          class="text-xs text-red-500"
+          *ngIf="vehicleForm.get('vehicleTypeId')?.touched && vehicleForm.get('vehicleTypeId')?.invalid"
+        >
+          Tipe kendaraan wajib dipilih.
         </p>
       </div>
 
@@ -133,16 +147,6 @@
         </p>
       </div>
 
-      <div class="space-y-2">
-        <label class="text-xs font-semibold text-strong">Category ID (opsional)</label>
-        <input
-          type="text"
-          formControlName="categoryId"
-          placeholder="UUID kategori"
-          class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
-        />
-      </div>
-
       <div class="space-y-2 md:col-span-2">
         <label class="text-xs font-semibold text-strong">Deskripsi</label>
         <textarea
@@ -151,6 +155,13 @@
           placeholder="Deskripsi kendaraan"
           class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
         ></textarea>
+      </div>
+
+      <div
+        class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600 md:col-span-2"
+        *ngIf="optionsErrorMessage"
+      >
+        {{ optionsErrorMessage }}
       </div>
 
       <div
