@@ -1,14 +1,14 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { DecimalPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { DatePipe, DecimalPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { finalize } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { VehicleService } from '../../shared/services/vehicle.service';
-import { VehicleResponse } from '../../shared/models/vehicle.model';
+import { PublicVehicleItemResponse } from '../../shared/models/public-vehicle.model';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [DecimalPipe, NgClass, NgFor, NgIf],
+  imports: [DatePipe, DecimalPipe, NgClass, NgFor, NgIf],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -16,29 +16,29 @@ export class HomePageComponent implements OnInit {
   private readonly vehicleService = inject(VehicleService);
   private readonly destroyRef = inject(DestroyRef);
 
-  vehicles: VehicleResponse[] = [];
+  vehicles: PublicVehicleItemResponse[] = [];
   isLoading = false;
   errorMessage = '';
-  selectedType = 'All';
+  selectedStatus = 'All';
 
   ngOnInit(): void {
     this.loadVehicles();
   }
 
-  get typeFilters(): string[] {
-    const types = new Set(
+  get statusFilters(): string[] {
+    const statuses = new Set(
       this.vehicles
-        .map((vehicle) => vehicle.type)
-        .filter((type): type is string => Boolean(type?.trim()))
+        .map((vehicle) => vehicle.status)
+        .filter((status): status is string => Boolean(status?.trim()))
     );
-    return ['All', ...Array.from(types)];
+    return ['All', ...Array.from(statuses)];
   }
 
-  get filteredVehicles(): VehicleResponse[] {
-    if (this.selectedType === 'All') {
+  get filteredVehicles(): PublicVehicleItemResponse[] {
+    if (this.selectedStatus === 'All') {
       return this.vehicles;
     }
-    return this.vehicles.filter((vehicle) => vehicle.type === this.selectedType);
+    return this.vehicles.filter((vehicle) => vehicle.status === this.selectedStatus);
   }
 
   loadVehicles(): void {
@@ -46,7 +46,7 @@ export class HomePageComponent implements OnInit {
     this.errorMessage = '';
 
     this.vehicleService
-      .getVehicles('', '', false)
+      .getPublicVehicles()
       .pipe(
         finalize(() => {
           this.isLoading = false;
@@ -57,10 +57,10 @@ export class HomePageComponent implements OnInit {
         next: (vehicles) => {
           this.vehicles = vehicles;
           if (
-            this.selectedType !== 'All' &&
-            !this.vehicles.some((vehicle) => vehicle.type === this.selectedType)
+            this.selectedStatus !== 'All' &&
+            !this.vehicles.some((vehicle) => vehicle.status === this.selectedStatus)
           ) {
-            this.selectedType = 'All';
+            this.selectedStatus = 'All';
           }
         },
         error: (error: Error) => {
@@ -70,8 +70,8 @@ export class HomePageComponent implements OnInit {
       });
   }
 
-  selectType(type: string): void {
-    this.selectedType = type;
+  selectStatus(status: string): void {
+    this.selectedStatus = status;
   }
 
   getStatusBadgeClass(status?: string): string {

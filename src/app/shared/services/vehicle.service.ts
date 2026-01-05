@@ -4,6 +4,7 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiResponse } from '../models/api-response.model';
 import { VehicleRequest, VehicleResponse, VehicleStatusRequest } from '../models/vehicle.model';
+import { PublicVehicleItemResponse, PublicVehiclesResponse } from '../models/public-vehicle.model';
 import { AuthService } from './auth.service';
 import { VehiclePhotoResponse, VehiclePhotoUpdateRequest } from '../models/vehicle-photo.model';
 
@@ -33,6 +34,37 @@ export class VehicleService {
             throw new Error('Gagal memuat data kendaraan.');
           }
           return response.data ?? [];
+        }),
+        catchError((error) => throwError(() => new Error(this.extractHttpErrorMessage(error))))
+      );
+  }
+
+  getPublicVehicles(
+    query?: string,
+    startDate?: string,
+    endDate?: string
+  ): Observable<PublicVehicleItemResponse[]> {
+    let params = new HttpParams();
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    if (endDate) {
+      params = params.set('endDate', endDate);
+    }
+    if (query) {
+      params = params.set('q', query);
+    }
+
+    return this.http
+      .get<ApiResponse<PublicVehiclesResponse>>(`${environment.apiBaseUrl}api/public/vehicles`, {
+        params
+      })
+      .pipe(
+        map((response) => {
+          if (!response?.isSuccess) {
+            throw new Error('Gagal memuat data kendaraan.');
+          }
+          return response.data?.items ?? [];
         }),
         catchError((error) => throwError(() => new Error(this.extractHttpErrorMessage(error))))
       );

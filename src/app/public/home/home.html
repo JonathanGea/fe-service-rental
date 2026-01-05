@@ -109,15 +109,15 @@
         <button
           type="button"
           class="rounded-full px-4 py-2 transition"
-          *ngFor="let type of typeFilters"
+          *ngFor="let status of statusFilters"
           [ngClass]="
-            selectedType === type
+            selectedStatus === status
               ? 'bg-public-primary text-white'
               : 'hover:text-public-primary'
           "
-          (click)="selectType(type)"
+          (click)="selectStatus(status)"
         >
-          {{ type }}
+          {{ status }}
         </button>
       </div>
     </div>
@@ -127,8 +127,18 @@
         class="rounded-3xl border border-public bg-white p-5 shadow-sm"
         *ngFor="let vehicle of filteredVehicles"
       >
-        <div class="relative flex h-40 items-center justify-center rounded-2xl border border-public bg-public-app">
-          <i class="fa-solid fa-car-side text-5xl text-public-primary" aria-hidden="true"></i>
+        <div class="relative flex h-40 items-center justify-center overflow-hidden rounded-2xl border border-public bg-public-app">
+          <ng-container *ngIf="vehicle.thumbnailUrl; else vehicleIcon">
+            <img
+              [src]="vehicle.thumbnailUrl"
+              [alt]="vehicle.name"
+              class="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </ng-container>
+          <ng-template #vehicleIcon>
+            <i class="fa-solid fa-car-side text-5xl text-public-primary" aria-hidden="true"></i>
+          </ng-template>
           <span
             class="absolute left-4 top-4 rounded-full px-3 py-1 text-xs font-semibold"
             [ngClass]="getStatusBadgeClass(vehicle.status)"
@@ -138,10 +148,15 @@
         </div>
         <div class="mt-4">
           <h3 class="text-lg font-semibold text-public-strong">{{ vehicle.name }}</h3>
-          <p class="text-sm text-public-strong/70">{{ vehicle.brand }} • {{ vehicle.type }}</p>
-          <p class="mt-2 text-xs text-public-strong/60">
-            {{ vehicle.year }} • {{ vehicle.transmission }} • {{ vehicle.capacity }} kursi
-          </p>
+          <p class="text-sm text-public-strong/70">Status: {{ formatStatus(vehicle.status) }}</p>
+          <ng-container *ngIf="vehicle.nextAvailableDate; else availableNow">
+            <p class="mt-2 text-xs text-public-strong/60">
+              Tersedia mulai {{ vehicle.nextAvailableDate | date: 'dd MMM yyyy' }}
+            </p>
+          </ng-container>
+          <ng-template #availableNow>
+            <p class="mt-2 text-xs text-public-strong/60">Tersedia hari ini</p>
+          </ng-template>
           <div class="mt-4 flex items-center justify-between">
             <span class="text-lg font-semibold text-public-strong">Rp {{ vehicle.pricePerDay | number }}</span>
             <span class="text-xs text-public-strong/60">per hari</span>

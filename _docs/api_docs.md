@@ -1075,6 +1075,108 @@
                 }
             }
         },
+        "/api/public/vehicle-types": {
+            "get": {
+                "tags": [
+                    "public-vehicle-type-controller"
+                ],
+                "operationId": "getVehicleTypes_1",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListVehicleTypeResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/public/vehicle-types/{id}": {
+            "get": {
+                "tags": [
+                    "public-vehicle-type-controller"
+                ],
+                "operationId": "getVehicleType_1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseVehicleTypeResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/public/brands": {
+            "get": {
+                "tags": [
+                    "public-brand-controller"
+                ],
+                "operationId": "getBrands_1",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseListBrandResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/public/brands/{id}": {
+            "get": {
+                "tags": [
+                    "public-brand-controller"
+                ],
+                "operationId": "getBrand_1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiResponseBrandResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/availability/calendar": {
             "get": {
                 "tags": [
