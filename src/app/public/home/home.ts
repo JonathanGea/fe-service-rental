@@ -77,15 +77,15 @@ export class HomePageComponent implements OnInit {
   getStatusBadgeClass(status?: string): string {
     const normalized = status?.toLowerCase();
     if (normalized === 'available') {
-      return 'bg-public-primary/15 text-public-primary';
+      return 'bg-public-primary/10 text-public-primary';
     }
     if (normalized === 'rented') {
-      return 'bg-public-strong/10 text-public-strong/70';
+      return 'bg-public-surface-subtle text-public-muted';
     }
     if (normalized === 'maintenance') {
-      return 'bg-public-primary/10 text-public-primary/80';
+      return 'bg-public-primary/5 text-public-primary';
     }
-    return 'bg-public-strong/10 text-public-strong/60';
+    return 'bg-public-surface-subtle text-public-muted';
   }
 
   formatStatus(status?: string): string {
