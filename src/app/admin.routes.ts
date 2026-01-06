@@ -8,6 +8,10 @@ import { BrandsListPageComponent } from './admin/brands/list/brands-list.compone
 import { BrandFormPageComponent } from './admin/brands/form/brand-form.component';
 import { VehicleTypesListPageComponent } from './admin/vehicle-types/list/vehicle-types-list.component';
 import { VehicleTypeFormPageComponent } from './admin/vehicle-types/form/vehicle-type-form.component';
+import { RentalsListPageComponent } from './admin/rentals/list/rentals-list.component';
+import { RentalFormPageComponent } from './admin/rentals/form/rental-form.component';
+import { RentalDetailPageComponent } from './admin/rentals/detail/rental-detail.component';
+import { RentalReturnPageComponent } from './admin/rentals/return/rental-return.component';
 
 export const adminRoutes: Routes = [
   {
@@ -105,6 +109,39 @@ export const adminRoutes: Routes = [
     data: {
       title: 'Kendaraan',
       breadcrumbs: ['Kendaraan', 'List']
+    }
+  },
+  {
+    path: 'rentals',
+    component: RentalsListPageComponent,
+    pathMatch: 'full',
+    data: {
+      title: 'Rental',
+      breadcrumbs: ['Rental', 'List']
+    }
+  },
+  {
+    path: 'rentals/new',
+    component: RentalFormPageComponent,
+    data: {
+      title: 'Buat Rental',
+      breadcrumbs: ['Rental', 'Tambah']
+    }
+  },
+  {
+    path: 'rentals/:id',
+    component: RentalDetailPageComponent,
+    data: {
+      title: 'Detail Rental',
+      breadcrumbs: ['Rental', 'Detail']
+    }
+  },
+  {
+    path: 'rentals/:id/return',
+    component: RentalReturnPageComponent,
+    data: {
+      title: 'Return Rental',
+      breadcrumbs: ['Rental', 'Return']
     }
   },
   {

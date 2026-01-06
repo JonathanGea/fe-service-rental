@@ -10,6 +10,7 @@ Basis pengecekan: seluruh kode di `src/` (routes, layout, shared services, dan k
 - Admin Dashboard: summary status kendaraan dari GET `/api/vehicles` (`src/app/admin/dashboard`).
 - Admin Kendaraan: list + filter, create/edit, detail, delete, update status, kelola foto (routes + komponen `src/app/admin/vehicles/*`).
 - Admin Brand & Tipe Kendaraan: list + create/edit (`src/app/admin/brands/*`, `src/app/admin/vehicle-types/*`).
+- Rental Management Admin: list rental, create rental, detail rental, return rental (`src/app/admin/rentals/*`).
 - Auth guard dan layout admin/public lengkap (navbar, sidebar, header/footer).
 
 ## Partial
@@ -19,7 +20,6 @@ Basis pengecekan: seluruh kode di `src/` (routes, layout, shared services, dan k
 
 ## Belum
 - Public Detail Kendaraan (Screen 2) + galeri/availability per tanggal.
-- Rental Management Admin: list rental, create rental, detail rental, return rental.
 - Riwayat Rental (history) dan Kalender Ketersediaan.
 - Validasi konflik tanggal rental di UI (sesuai use case).
 - Export histori (opsional) dan kategori kendaraan (opsional) belum terlihat di UI.

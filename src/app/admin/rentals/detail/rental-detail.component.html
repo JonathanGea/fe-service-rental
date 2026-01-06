@@ -1,0 +1,169 @@
+<section class="space-y-6">
+  <header class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h2 class="text-2xl font-semibold text-strong">Detail Rental</h2>
+      <p class="text-sm text-strong/70">Perbarui data peminjam dan periode sewa.</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <a
+        routerLink="/admin/rentals"
+        class="inline-flex items-center gap-2 rounded-xl border border-default px-4 py-2 text-sm font-semibold text-strong/70 transition hover:text-primary"
+      >
+        <i class="fa-solid fa-arrow-left text-base" aria-hidden="true"></i>
+        Kembali
+      </a>
+      <a
+        *ngIf="rental"
+        [routerLink]="['/admin/rentals', rental.id, 'return']"
+        class="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+      >
+        Proses Return
+      </a>
+    </div>
+  </header>
+
+  <div
+    class="rounded-2xl border border-default bg-surface p-6"
+    *ngIf="rental"
+  >
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <p class="text-xs font-semibold text-strong/60">Kendaraan</p>
+        <p class="mt-1 text-sm font-semibold text-strong">{{ getVehicleName(rental.vehicleId) }}</p>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-strong/60">Status</p>
+        <p class="mt-1 text-sm font-semibold text-strong">{{ rental.status || '-' }}</p>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-strong/60">Tanggal Rental</p>
+        <p class="mt-1 text-sm text-strong/80">
+          {{ rental.startDate | date: 'dd MMM yyyy' }} - {{ rental.endDate | date: 'dd MMM yyyy' }}
+        </p>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-strong/60">Return Date</p>
+        <p class="mt-1 text-sm text-strong/80">
+          {{ rental.returnDate ? (rental.returnDate | date: 'dd MMM yyyy') : '-' }}
+        </p>
+      </div>
+      <div class="lg:col-span-4">
+        <p class="text-xs font-semibold text-strong/60">Catatan Kondisi</p>
+        <p class="mt-1 text-sm text-strong/80">{{ rental.conditionNotes || '-' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <form
+    class="grid gap-6 rounded-2xl border border-default bg-surface p-6 lg:grid-cols-2"
+    [formGroup]="rentalForm"
+    (ngSubmit)="submitForm()"
+  >
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Nama Peminjam</label>
+      <input
+        type="text"
+        formControlName="renterName"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">No. Telepon</label>
+      <input
+        type="text"
+        formControlName="renterPhone"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="space-y-2 lg:col-span-2">
+      <label class="text-xs font-semibold text-strong">Alamat</label>
+      <textarea
+        rows="3"
+        formControlName="renterAddress"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      ></textarea>
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">No. Identitas</label>
+      <input
+        type="text"
+        formControlName="renterIdNumber"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Harga Total</label>
+      <input
+        type="number"
+        formControlName="priceTotal"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Tanggal Mulai</label>
+      <input
+        type="date"
+        formControlName="startDate"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Tanggal Selesai</label>
+      <input
+        type="date"
+        formControlName="endDate"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Lokasi Pickup</label>
+      <input
+        type="text"
+        formControlName="pickupLocation"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Lokasi Return</label>
+      <input
+        type="text"
+        formControlName="returnLocation"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="space-y-2 lg:col-span-2">
+      <label class="text-xs font-semibold text-strong">Catatan</label>
+      <textarea
+        rows="3"
+        formControlName="notes"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      ></textarea>
+    </div>
+
+    <div class="lg:col-span-2">
+      <div
+        class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600"
+        *ngIf="errorMessage"
+      >
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3 sm:flex-row sm:justify-end lg:col-span-2">
+      <button
+        type="submit"
+        class="rounded-xl bg-primary px-6 py-2 text-sm font-semibold text-white disabled:opacity-70"
+        [disabled]="isUpdating || isLoading"
+      >
+        {{ isUpdating ? 'Menyimpan...' : 'Simpan Perubahan' }}
+      </button>
+    </div>
+  </form>
+
+  <div
+    class="rounded-2xl border border-red-200 bg-red-50 px-4 py-4 text-sm text-red-600"
+    *ngIf="!isLoading && !rental && errorMessage"
+  >
+    {{ errorMessage }}
+  </div>
+</section>

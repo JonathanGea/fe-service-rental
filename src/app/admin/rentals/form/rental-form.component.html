@@ -1,0 +1,147 @@
+<section class="space-y-6">
+  <header class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h2 class="text-2xl font-semibold text-strong">Buat Rental</h2>
+      <p class="text-sm text-strong/70">Isi data peminjam dan periode sewa kendaraan.</p>
+    </div>
+    <a
+      routerLink="/admin/rentals"
+      class="inline-flex items-center gap-2 rounded-xl border border-default px-4 py-2 text-sm font-semibold text-strong/70 transition hover:text-primary"
+    >
+      <i class="fa-solid fa-arrow-left text-base" aria-hidden="true"></i>
+      Kembali
+    </a>
+  </header>
+
+  <form
+    class="grid gap-6 rounded-2xl border border-default bg-surface p-6 lg:grid-cols-2"
+    [formGroup]="rentalForm"
+    (ngSubmit)="submitForm()"
+  >
+    <div class="space-y-2 lg:col-span-2">
+      <label class="text-xs font-semibold text-strong">Kendaraan</label>
+      <select
+        formControlName="vehicleId"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      >
+        <option value="">Pilih Kendaraan</option>
+        <option *ngFor="let vehicle of vehicles" [value]="vehicle.id">{{ vehicle.name }}</option>
+      </select>
+      <p class="text-xs text-strong/50" *ngIf="isLoadingVehicles">Memuat data kendaraan...</p>
+    </div>
+
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Nama Peminjam</label>
+      <input
+        type="text"
+        formControlName="renterName"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+        placeholder="Nama lengkap"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">No. Telepon</label>
+      <input
+        type="text"
+        formControlName="renterPhone"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+        placeholder="08xxxxxxxx"
+      />
+    </div>
+    <div class="space-y-2 lg:col-span-2">
+      <label class="text-xs font-semibold text-strong">Alamat</label>
+      <textarea
+        rows="3"
+        formControlName="renterAddress"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+        placeholder="Alamat lengkap"
+      ></textarea>
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">No. Identitas</label>
+      <input
+        type="text"
+        formControlName="renterIdNumber"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+        placeholder="KTP/SIM"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Harga Total</label>
+      <input
+        type="number"
+        formControlName="priceTotal"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+        placeholder="0"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Tanggal Mulai</label>
+      <input
+        type="date"
+        formControlName="startDate"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Tanggal Selesai</label>
+      <input
+        type="date"
+        formControlName="endDate"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Lokasi Pickup</label>
+      <input
+        type="text"
+        formControlName="pickupLocation"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+        placeholder="(Opsional)"
+      />
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs font-semibold text-strong">Lokasi Return</label>
+      <input
+        type="text"
+        formControlName="returnLocation"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+        placeholder="(Opsional)"
+      />
+    </div>
+    <div class="space-y-2 lg:col-span-2">
+      <label class="text-xs font-semibold text-strong">Catatan</label>
+      <textarea
+        rows="3"
+        formControlName="notes"
+        class="w-full rounded-xl border border-default bg-app px-3 py-2 text-sm text-strong"
+        placeholder="Catatan tambahan"
+      ></textarea>
+    </div>
+
+    <div class="lg:col-span-2">
+      <div
+        class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-600"
+        *ngIf="errorMessage"
+      >
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3 sm:flex-row sm:justify-end lg:col-span-2">
+      <a
+        routerLink="/admin/rentals"
+        class="rounded-xl border border-default px-4 py-2 text-sm font-semibold text-strong/70"
+      >
+        Batal
+      </a>
+      <button
+        type="submit"
+        class="rounded-xl bg-primary px-6 py-2 text-sm font-semibold text-white disabled:opacity-70"
+        [disabled]="isSaving"
+      >
+        {{ isSaving ? 'Menyimpan...' : 'Simpan Rental' }}
+      </button>
+    </div>
+  </form>
+</section>
