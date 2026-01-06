@@ -42,21 +42,31 @@ Note: In Tailwind v4, these tokens are also declared in `src/styles.css` via `@t
 
 | Color name | Hex value | Intended usage |
 | --- | --- | --- |
-| App background | `#FFF8F1` | Public landing background |
-| Surface | `#FFFFFF` | Cards, panels |
-| Primary accent | `#FF7A00` | Primary actions, highlights |
-| Strong text | `#2E2A26` | Headings, body text |
+| App background | `#F5F6F8` | Background halaman (abu muda, bersih) |
+| Surface | `#FFFFFF` | Card / panel / form |
+| Surface subtle | `#F8FAFC` | Input bg, chip bg, hover ringan |
+| Border | `#E6E8EC` | Border card, input, divider |
+| Strong text | `#111827` | Heading, teks utama (near-black) |
+| Muted text | `#6B7280` | Deskripsi, label, placeholder |
+| Primary | `#111827` | CTA utama (mis. tombol Search hitam) |
+| Primary hover | `#0B1220` | Hover CTA |
+| Primary accent | `#2563EB` | Link, state aktif kecil (tab/menu), highlight secukupnya |
+| Hero overlay | `#0B1220` (60%) | Overlay di hero image biar teks kebaca |
 
 ## Public Tailwind color mapping
 
 | Tailwind class | Hex value |
 | --- | --- |
-| `bg-public-app` | `#FFF8F1` |
+| `bg-public-app` | `#F5F6F8` |
 | `bg-public-surface` | `#FFFFFF` |
-| `text-public-primary` | `#FF7A00` |
-| `text-public-strong` | `#2E2A26` |
-| `border-public` | `#FFFFFF` |
-| `bg-public-primary` | `#FF7A00` |
+| `bg-public-surface-subtle` | `#F8FAFC` |
+| `border-public` | `#E6E8EC` |
+| `text-public-strong` | `#111827` |
+| `text-public-muted` | `#6B7280` |
+| `bg-public-primary` | `#111827` |
+| `bg-public-primary-hover` | `#0B1220` |
+| `text-public-primary` | `#2563EB` |
+| `ring-public` | `#2563EB` |
 
 Note: In Tailwind v4, these tokens are also declared in `src/styles.css` via `@theme` to ensure the utilities are generated.
 
@@ -90,13 +100,13 @@ Admin Text hierarchy
 
 Public Buttons
 ```html
-<button class="bg-public-primary text-white hover:bg-public-primary/90">Primary</button>
+<button class="bg-public-primary text-white hover:bg-public-primary-hover">Primary</button>
 ```
 
 Public Text hierarchy
 ```html
 <h1 class="text-public-strong">Heading</h1>
-<p class="text-public-strong/70">Supporting text</p>
+<p class="text-public-muted">Supporting text</p>
 <a class="text-public-primary">Link</a>
 ```
 
@@ -104,7 +114,7 @@ Public Text hierarchy
 
 Do:
 - Use semantic classes for admin: `bg-app`, `bg-surface`, `text-strong`, `text-primary`, `border-default`
-- Use semantic classes for public: `bg-public-app`, `bg-public-surface`, `text-public-strong`, `text-public-primary`, `border-public`
+- Use semantic classes for public: `bg-public-app`, `bg-public-surface`, `bg-public-surface-subtle`, `text-public-strong`, `text-public-muted`, `text-public-primary`, `border-public`
 - Use opacity modifiers (e.g., `text-strong/70`) for subtle emphasis
 
 Don't:

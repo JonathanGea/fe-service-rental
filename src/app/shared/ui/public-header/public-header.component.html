@@ -1,5 +1,5 @@
 <header class="sticky top-0 z-50 border-b border-public bg-public-surface shadow-sm">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 text-xs text-public-strong/60">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3 text-xs text-public-muted">
     <div class="flex items-center gap-4">
       <span>Open daily 08.00 - 21.00</span>
       <span class="hidden md:inline">Jl. Melati No. 18, Bandung</span>
@@ -13,7 +13,7 @@
       <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-public-primary text-white">FR</span>
       Fe-Service Rental
     </a>
-    <nav class="hidden items-center gap-6 text-sm text-public-strong/70 md:flex">
+    <nav class="hidden items-center gap-6 text-sm text-public-muted md:flex">
       <a
         routerLink="/"
         routerLinkActive="text-public-primary"
@@ -30,12 +30,12 @@
       <a
         routerLink="/admin/dashboard"
         routerLinkActive="text-public-primary"
-        class="rounded-full border border-public bg-public-surface px-4 py-2 text-xs font-semibold text-public-strong/70 transition hover:text-public-primary"
+        class="rounded-full border border-public bg-public-surface px-4 py-2 text-xs font-semibold text-public-muted transition hover:text-public-primary"
       >
         Admin
       </a>
       <a
-        class="rounded-full bg-public-primary px-4 py-2 text-xs font-semibold text-white transition hover:bg-public-primary/90"
+        class="rounded-full bg-public-primary px-4 py-2 text-xs font-semibold text-white transition hover:bg-public-primary-hover"
         href="https://wa.me/628123456789?text=Halo%20saya%20ingin%20sewa%20kendaraan"
       >
         Pesan via WhatsApp
@@ -43,7 +43,7 @@
     </div>
     <button
       type="button"
-      class="flex items-center gap-2 rounded-full border border-public bg-public-surface px-4 py-2 text-xs font-semibold text-public-strong/70 transition hover:text-public-primary md:hidden"
+      class="flex items-center gap-2 rounded-full border border-public bg-public-surface px-4 py-2 text-xs font-semibold text-public-muted transition hover:text-public-primary md:hidden"
       (click)="toggleMenu()"
       [attr.aria-expanded]="isMenuOpen"
       aria-controls="public-mobile-menu"
@@ -62,7 +62,7 @@
     [class.pointer-events-none]="!isMenuOpen"
     [attr.aria-hidden]="!isMenuOpen"
   >
-    <div class="mx-auto grid max-w-6xl gap-4 px-6 py-5 text-sm text-public-strong/70">
+    <div class="mx-auto grid max-w-6xl gap-4 px-6 py-5 text-sm text-public-muted">
       <a
         routerLink="/"
         routerLinkActive="text-public-primary"
@@ -78,13 +78,13 @@
       <a
         routerLink="/admin/dashboard"
         routerLinkActive="text-public-primary"
-        class="rounded-full border border-public bg-public-surface px-4 py-2 text-center text-xs font-semibold text-public-strong/70 transition hover:text-public-primary"
+        class="rounded-full border border-public bg-public-surface px-4 py-2 text-center text-xs font-semibold text-public-muted transition hover:text-public-primary"
         (click)="closeMenu()"
       >
         Admin
       </a>
       <a
-        class="rounded-full bg-public-primary px-4 py-2 text-center text-xs font-semibold text-white transition hover:bg-public-primary/90"
+        class="rounded-full bg-public-primary px-4 py-2 text-center text-xs font-semibold text-white transition hover:bg-public-primary-hover"
         href="https://wa.me/628123456789?text=Halo%20saya%20ingin%20sewa%20kendaraan"
         (click)="closeMenu()"
       >

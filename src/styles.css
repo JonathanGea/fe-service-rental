@@ -6,9 +6,23 @@
   --color-primary: #4CAF50;
   --color-strong: #344767;
   --color-default: #FFFFFF;
-  --color-public-app: #FFF8F1;
+  --color-public-app: #F5F6F8;
   --color-public-surface: #FFFFFF;
-  --color-public-primary: #FF7A00;
-  --color-public-strong: #2E2A26;
-  --color-public: #FFFFFF;
+  --color-public-surface-subtle: #F8FAFC;
+  --color-public: #E6E8EC;
+  --color-public-strong: #111827;
+  --color-public-muted: #6B7280;
+  --color-public-primary: #2563EB;
+  --color-public-primary-hover: #0B1220;
+  --color-public-ring: #2563EB;
+}
+
+@layer utilities {
+  .bg-public-primary {
+    background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
+  }
+
+  .ring-public {
+    --tw-ring-color: var(--color-public-ring);
+  }
 }
