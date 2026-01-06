@@ -268,7 +268,23 @@ export class VehicleService {
       }
       const apiResponse = error.error as ApiResponse<unknown> | null;
       if (apiResponse?.errors?.length) {
-        return apiResponse.errors.join(', ');
+        const normalizedErrors = apiResponse.errors
+          .map((item) => {
+            if (typeof item === 'string') {
+              return item;
+            }
+            if (item && typeof item === 'object' && 'message' in item) {
+              const message = (item as { message?: unknown }).message;
+              if (typeof message === 'string') {
+                return message;
+              }
+            }
+            return '';
+          })
+          .filter((message) => message.trim().length > 0);
+        if (normalizedErrors.length > 0) {
+          return normalizedErrors.join(', ');
+        }
       }
       if (typeof error.error === 'string' && error.error.trim().length > 0) {
         return error.error;

@@ -74,12 +74,15 @@
           </div>
         </div>
         <div class="mt-4 space-y-2">
-          <label class="text-xs font-semibold text-strong">Update Status</label>
+          <label for="vehicle-status" class="text-xs font-semibold text-strong">Update Status</label>
           <select
+            id="vehicle-status"
             [(ngModel)]="statusValue"
             class="w-full rounded-xl border border-default bg-surface px-3 py-2 text-sm text-strong"
           >
-            <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+            <option *ngFor="let status of statusOptions" [value]="status" [disabled]="status === 'rented'">
+              {{ status }}
+            </option>
           </select>
         </div>
         <button

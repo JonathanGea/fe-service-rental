@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DecimalPipe, NgClass, NgIf } from '@angular/common';
+import { DecimalPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -10,7 +10,7 @@ import { VehicleResponse } from '../../../shared/models/vehicle.model';
 @Component({
   selector: 'app-vehicle-detail-page',
   standalone: true,
-  imports: [DecimalPipe, FormsModule, NgClass, NgIf, RouterLink],
+  imports: [DecimalPipe, FormsModule, NgClass, NgFor, NgIf, RouterLink],
   templateUrl: './vehicle-detail.component.html'
 })
 export class VehicleDetailPageComponent {
@@ -50,7 +50,7 @@ export class VehicleDetailPageComponent {
       .subscribe({
         next: (vehicle) => {
           this.vehicle = vehicle;
-          this.statusValue = vehicle.status;
+          this.statusValue = vehicle.status?.toLowerCase() ?? '';
         },
         error: (error: Error) => {
           this.errorMessage = error.message;
@@ -61,6 +61,10 @@ export class VehicleDetailPageComponent {
 
   updateStatus(): void {
     if (!this.vehicle) {
+      return;
+    }
+    if (this.statusValue === 'rented') {
+      this.errorMessage = "Status 'rented' dikelola sistem.";
       return;
     }
 
@@ -78,6 +82,7 @@ export class VehicleDetailPageComponent {
       .subscribe({
         next: (vehicle) => {
           this.vehicle = vehicle;
+          this.statusValue = vehicle.status?.toLowerCase() ?? '';
         },
         error: (error: Error) => {
           this.errorMessage = error.message;
