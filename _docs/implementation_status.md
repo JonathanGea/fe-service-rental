@@ -12,6 +12,7 @@ Basis pengecekan: seluruh kode di `src/` (routes, layout, shared services, dan k
 - Admin Brand & Tipe Kendaraan: list + create/edit (`src/app/admin/brands/*`, `src/app/admin/vehicle-types/*`).
 - Rental Management Admin: list rental, create rental, detail rental, return rental (`src/app/admin/rentals/*`).
 - Riwayat Rental (history) admin + filter tanggal/kendaraan (`/admin/rentals/history`).
+- Kalender Ketersediaan (admin) + filter kendaraan/tanggal dan grid status (`/admin/availability`).
 - Auth guard dan layout admin/public lengkap (navbar, sidebar, header/footer).
 - Auto logout + redirect ke `/admin/login` saat sesi kadaluarsa/401 di area admin (interceptor).
 - Highlight menu sidebar hanya untuk rute aktif (fix overlap Rental vs Riwayat Rental).
@@ -23,6 +24,5 @@ Basis pengecekan: seluruh kode di `src/` (routes, layout, shared services, dan k
 
 ## Belum
 - Public Detail Kendaraan (Screen 2) + galeri/availability per tanggal.
-- Kalender Ketersediaan.
 - Validasi konflik tanggal rental di UI (sesuai use case).
 - Export histori (opsional) dan kategori kendaraan (opsional) belum terlihat di UI.

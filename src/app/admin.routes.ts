@@ -13,6 +13,7 @@ import { RentalFormPageComponent } from './admin/rentals/form/rental-form.compon
 import { RentalDetailPageComponent } from './admin/rentals/detail/rental-detail.component';
 import { RentalReturnPageComponent } from './admin/rentals/return/rental-return.component';
 import { RentalHistoryPageComponent } from './admin/rentals/history/rental-history.component';
+import { AvailabilityCalendarPageComponent } from './admin/availability/availability-calendar.component';
 
 export const adminRoutes: Routes = [
   {
@@ -127,6 +128,14 @@ export const adminRoutes: Routes = [
     data: {
       title: 'Riwayat Rental',
       breadcrumbs: ['Rental', 'Riwayat']
+    }
+  },
+  {
+    path: 'availability',
+    component: AvailabilityCalendarPageComponent,
+    data: {
+      title: 'Kalender Ketersediaan',
+      breadcrumbs: ['Rental', 'Kalender']
     }
   },
   {
