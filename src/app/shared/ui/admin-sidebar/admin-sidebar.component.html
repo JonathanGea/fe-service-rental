@@ -78,6 +78,7 @@
       <a
         routerLink="/admin/rentals"
         routerLinkActive="bg-primary/15 text-primary"
+        [routerLinkActiveOptions]="{ exact: true }"
         class="group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium text-strong/80 transition hover:bg-primary/10 hover:text-primary"
         title="Rental"
         (click)="closeMobile.emit()"

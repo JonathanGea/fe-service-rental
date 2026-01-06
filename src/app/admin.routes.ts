@@ -12,6 +12,7 @@ import { RentalsListPageComponent } from './admin/rentals/list/rentals-list.comp
 import { RentalFormPageComponent } from './admin/rentals/form/rental-form.component';
 import { RentalDetailPageComponent } from './admin/rentals/detail/rental-detail.component';
 import { RentalReturnPageComponent } from './admin/rentals/return/rental-return.component';
+import { RentalHistoryPageComponent } from './admin/rentals/history/rental-history.component';
 
 export const adminRoutes: Routes = [
   {
@@ -118,6 +119,14 @@ export const adminRoutes: Routes = [
     data: {
       title: 'Rental',
       breadcrumbs: ['Rental', 'List']
+    }
+  },
+  {
+    path: 'rentals/history',
+    component: RentalHistoryPageComponent,
+    data: {
+      title: 'Riwayat Rental',
+      breadcrumbs: ['Rental', 'Riwayat']
     }
   },
   {

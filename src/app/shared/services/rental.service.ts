@@ -53,6 +53,38 @@ export class RentalService {
       );
   }
 
+  getRentalHistory(filters?: {
+    vehicleId?: string;
+    startDate?: string;
+    endDate?: string;
+  }): Observable<RentalResponse[]> {
+    let params = new HttpParams();
+    if (filters?.vehicleId) {
+      params = params.set('vehicleId', filters.vehicleId);
+    }
+    if (filters?.startDate) {
+      params = params.set('startDate', filters.startDate);
+    }
+    if (filters?.endDate) {
+      params = params.set('endDate', filters.endDate);
+    }
+
+    return this.http
+      .get<ApiResponse<RentalResponse[]>>(`${environment.apiBaseUrl}api/rentals/history`, {
+        params,
+        headers: this.buildAuthHeaders()
+      })
+      .pipe(
+        map((response) => {
+          if (!response?.isSuccess) {
+            throw new Error('Gagal memuat riwayat rental.');
+          }
+          return response.data ?? [];
+        }),
+        catchError((error) => throwError(() => new Error(this.extractHttpErrorMessage(error))))
+      );
+  }
+
   getRental(id: string): Observable<RentalResponse> {
     return this.http
       .get<ApiResponse<RentalResponse>>(`${environment.apiBaseUrl}api/rentals/${id}`, {
