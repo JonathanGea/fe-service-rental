@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { finalize } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RentalService } from '../../../shared/services/rental.service';
@@ -12,7 +12,7 @@ import { RentalRequest } from '../../../shared/models/rental.model';
 @Component({
   selector: 'app-rental-form-page',
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, ReactiveFormsModule, RouterLink],
+  imports: [NgFor, NgIf, ReactiveFormsModule, RouterLink],
   templateUrl: './rental-form.component.html'
 })
 export class RentalFormPageComponent {

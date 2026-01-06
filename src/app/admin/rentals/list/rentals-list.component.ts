@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject } from '@angular/core';
-import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { DatePipe, DecimalPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { VehicleResponse } from '../../../shared/models/vehicle.model';
 @Component({
   selector: 'app-rentals-list-page',
   standalone: true,
-  imports: [DatePipe, NgClass, NgFor, NgIf, ReactiveFormsModule, RouterLink],
+  imports: [DatePipe, DecimalPipe, NgClass, NgFor, NgIf, ReactiveFormsModule, RouterLink],
   templateUrl: './rentals-list.component.html'
 })
 export class RentalsListPageComponent {
